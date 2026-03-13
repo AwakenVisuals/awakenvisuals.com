@@ -1,9 +1,8 @@
 "use client";
 
 import type React from "react";
-import { useRef, useMemo, useCallback, useState, useEffect } from "react";
+import { Suspense, useRef, useMemo, useCallback, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
 type ImageItem = string | { src: string; alt?: string };
@@ -189,7 +188,42 @@ function GalleryScene({
     [images]
   );
 
-  const textures = useTexture(normalizedImages.map((img) => img.src));
+  const [textures, setTextures] = useState<THREE.Texture[]>([]);
+
+  useEffect(() => {
+    const loader = new THREE.TextureLoader();
+    loader.crossOrigin = "anonymous";
+    let cancelled = false;
+    Promise.all(
+      normalizedImages.map(
+        (img) =>
+          new Promise<THREE.Texture>((resolve) => {
+            loader.load(
+              img.src,
+              (tex) => resolve(tex),
+              undefined,
+              () => {
+                // On error, create a small colored placeholder texture
+                const canvas = document.createElement("canvas");
+                canvas.width = 2;
+                canvas.height = 2;
+                const ctx = canvas.getContext("2d");
+                if (ctx) {
+                  ctx.fillStyle = "#043565";
+                  ctx.fillRect(0, 0, 2, 2);
+                }
+                resolve(new THREE.CanvasTexture(canvas));
+              }
+            );
+          })
+      )
+    ).then((loaded) => {
+      if (!cancelled) setTextures(loaded);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [normalizedImages]);
 
   const materials = useMemo(
     () => Array.from({ length: visibleCount }, () => createClothMaterial()),
@@ -422,13 +456,18 @@ export function InfiniteGallery({
       <Canvas
         camera={{ position: [0, 0, 0], fov: 55 }}
         gl={{ antialias: true, alpha: true }}
+        onCreated={({ gl }) => {
+          gl.setClearColor(new THREE.Color("#1A1A1A"), 1);
+        }}
       >
-        <GalleryScene
-          images={images}
-          fadeSettings={fadeSettings}
-          blurSettings={blurSettings}
-          {...rest}
-        />
+        <Suspense fallback={null}>
+          <GalleryScene
+            images={images}
+            fadeSettings={fadeSettings}
+            blurSettings={blurSettings}
+            {...rest}
+          />
+        </Suspense>
       </Canvas>
     </div>
   );

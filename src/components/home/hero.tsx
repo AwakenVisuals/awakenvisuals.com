@@ -4,13 +4,14 @@ import { motion } from "motion/react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import React from "react";
 
 const InfiniteGallery = dynamic(
   () =>
     import("@/components/ui/3d-gallery-photography").then(
       (mod) => mod.InfiniteGallery
     ),
-  { ssr: false }
+  { ssr: false, loading: () => null }
 );
 
 const galleryImages = [
@@ -24,17 +25,36 @@ const galleryImages = [
   "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
 ];
 
+class GalleryErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  render() {
+    if (this.state.hasError) return null;
+    return this.props.children;
+  }
+}
+
 export function Hero() {
   return (
     <section className="relative flex h-screen flex-col items-center justify-center overflow-hidden bg-[#1A1A1A]">
       {/* 3D Gallery Background */}
       <div className="absolute inset-0">
-        <InfiniteGallery
-          images={galleryImages}
-          speed={0.6}
-          visibleCount={8}
-          className="h-full w-full"
-        />
+        <GalleryErrorBoundary>
+          <InfiniteGallery
+            images={galleryImages}
+            speed={0.6}
+            visibleCount={8}
+            className="h-full w-full"
+          />
+        </GalleryErrorBoundary>
         {/* Overlay for text readability */}
         <div className="pointer-events-none absolute inset-0 bg-[#1A1A1A]/40" />
       </div>
