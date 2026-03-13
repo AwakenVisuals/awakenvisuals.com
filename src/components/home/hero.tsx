@@ -53,7 +53,7 @@ export function Hero() {
           <InfiniteGallery
             images={galleryImages}
             speed={0.6}
-            visibleCount={8}
+            visibleCount={18}
             className="h-full w-full"
           />
         </GalleryErrorBoundary>

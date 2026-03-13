@@ -38,9 +38,9 @@ interface PlaneData {
   y: number;
 }
 
-const DEFAULT_DEPTH_RANGE = 50;
-const MAX_HORIZONTAL_OFFSET = 8;
-const MAX_VERTICAL_OFFSET = 8;
+const DEFAULT_DEPTH_RANGE = 35;
+const MAX_HORIZONTAL_OFFSET = 6;
+const MAX_VERTICAL_OFFSET = 5;
 
 const createClothMaterial = () => {
   return new THREE.ShaderMaterial({
