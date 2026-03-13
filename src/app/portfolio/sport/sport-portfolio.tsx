@@ -26,22 +26,22 @@ const sportCategories = [
       "https://images.unsplash.com/photo-1541252260730-0412e8e2108e?w=800&q=80",
   },
   {
-    slug: "wec",
-    title: "WEC",
-    image:
-      "https://images.unsplash.com/photo-1504817343863-5092a923803e?w=800&q=80",
-  },
-  {
     slug: "sportscars",
     title: "Sportscars",
     image:
       "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80",
   },
   {
-    slug: "single-seaters",
-    title: "Single Seaters",
+    slug: "gb3-gb4",
+    title: "GB3 & GB4",
     image:
       "https://images.unsplash.com/photo-1552849397-7e24eaf0b48a?w=800&q=80",
+  },
+  {
+    slug: "videos",
+    title: "Videos",
+    image:
+      "https://images.unsplash.com/photo-1504817343863-5092a923803e?w=800&q=80",
   },
 ];
 
@@ -118,11 +118,13 @@ export function SportPortfolio() {
             transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
           >
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-light uppercase tracking-[0.15em] text-[#1A1A1A]">
-              Sport
+              Action
             </h1>
+            <p className="mt-2 text-lg font-light italic tracking-wide text-[#C8A84E]">
+              by Awaken Visuals
+            </p>
             <p className="mt-4 max-w-lg text-base text-[#1A1A1A]/50 tracking-wide">
-              Capturing the intensity, emotion, and beauty of athletic
-              competition
+              Sport Photography by Nick Emmerson
             </p>
             <div className="mt-8 h-px w-16 bg-[#C8A84E]" />
           </motion.div>

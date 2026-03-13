@@ -6,20 +6,6 @@ import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { ArrowLeft } from "lucide-react";
 
-const travelCategories = [
-  {
-    slug: "travel",
-    title: "Travel",
-    image:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-  },
-  {
-    slug: "edits",
-    title: "Edits",
-    image:
-      "https://images.unsplash.com/photo-1502784444187-359ac186c5bb?w=800&q=80",
-  },
-];
 
 function SubcategoryCard({
   slug,
@@ -94,22 +80,33 @@ export function TravelPortfolio() {
             transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
           >
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-light uppercase tracking-[0.15em] text-[#1A1A1A]">
-              Travel
+              Adventure
             </h1>
+            <p className="mt-2 text-lg font-light italic tracking-wide text-[#C8A84E]">
+              by Awaken Visuals
+            </p>
             <p className="mt-4 max-w-lg text-base text-[#1A1A1A]/50 tracking-wide">
-              Discovering the world through light, colour, and composition
+              Travel Photography and Edits by Nick Emmerson
             </p>
             <div className="mt-8 h-px w-16 bg-[#C8A84E]" />
           </motion.div>
         </div>
       </section>
 
-      {/* Grid */}
+      {/* Travel */}
+      <section className="px-6 pb-16 md:px-10">
+        <div className="mx-auto max-w-7xl">
+          <SubcategoryCard slug="travel" title="Travel" image="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" index={0} />
+        </div>
+      </section>
+
+      {/* Edits and Videography */}
       <section className="px-6 pb-32 md:px-10">
-        <div className="mx-auto max-w-7xl grid gap-5 sm:grid-cols-2">
-          {travelCategories.map((cat, index) => (
-            <SubcategoryCard key={cat.slug} {...cat} index={index} />
-          ))}
+        <div className="mx-auto max-w-7xl">
+          <h2 className="mb-8 text-2xl font-light uppercase tracking-[0.15em] text-[#1A1A1A]/70 md:text-3xl">
+            Edits and Videography
+          </h2>
+          <SubcategoryCard slug="edits" title="Edits" image="https://images.unsplash.com/photo-1502784444187-359ac186c5bb?w=800&q=80" index={1} />
         </div>
       </section>
     </main>

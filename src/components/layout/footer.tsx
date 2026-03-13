@@ -1,16 +1,23 @@
 import Link from "next/link";
-import { Instagram, Youtube, Mail } from "lucide-react";
+import { Instagram, MessageCircle } from "lucide-react";
+
+function TikTokIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.71a8.21 8.21 0 0 0 4.76 1.52V6.77a4.83 4.83 0 0 1-1-.08z" />
+    </svg>
+  );
+}
 
 const socialLinks = [
   { href: "https://instagram.com/awakenvisuals", icon: Instagram, label: "Instagram" },
-  { href: "https://youtube.com/@awakenvisuals", icon: Youtube, label: "YouTube" },
-  { href: "mailto:hello@awakenvisuals.com", icon: Mail, label: "Email" },
+  { href: "https://tiktok.com/@awakenvisuals", icon: TikTokIcon, label: "TikTok" },
+  { href: "https://wa.me/+447858371619", icon: MessageCircle, label: "WhatsApp" },
 ];
 
 const footerLinks = [
-  { href: "/portfolio/sport", label: "Sport" },
-  { href: "/portfolio/travel", label: "Travel" },
-  { href: "/blog", label: "Journal" },
+  { href: "/portfolio/sport", label: "Action" },
+  { href: "/portfolio/travel", label: "Adventure" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
