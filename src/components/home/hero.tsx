@@ -15,14 +15,16 @@ const InfiniteGallery = dynamic(
 );
 
 const galleryImages = [
-  "https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?w=800&q=80",
-  "https://images.unsplash.com/photo-1504194104404-433180773017?w=800&q=80",
-  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-  "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&q=80",
-  "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80",
-  "https://images.unsplash.com/photo-1532549239564-a4860d583850?w=800&q=80",
-  "https://images.unsplash.com/photo-1472457897821-70d58223824e?w=800&q=80",
-  "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+  "/gallery/hero-1.jpg",
+  "/gallery/hero-2.jpg",
+  "/gallery/hero-3.jpg",
+  "/gallery/hero-4.jpg",
+  "/gallery/hero-5.jpg",
+  "/gallery/hero-6.jpg",
+  "/gallery/hero-7.jpg",
+  "/gallery/hero-8.jpg",
+  "/gallery/hero-9.jpg",
+  "/gallery/hero-10.jpg",
 ];
 
 class GalleryErrorBoundary extends React.Component<
