@@ -84,7 +84,7 @@ const createClothMaterial = () => {
         }
 
         pos.z -= (curve + clothEffect + flagWave);
-        gl_Position = projectionMatrix * modelViewPosition * vec4(pos, 1.0);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
       }
     `,
     fragmentShader: `
@@ -200,9 +200,13 @@ function GalleryScene({
           new Promise<THREE.Texture>((resolve) => {
             loader.load(
               img.src,
-              (tex) => resolve(tex),
+              (tex) => {
+                console.log("[Gallery] Loaded:", img.src);
+                resolve(tex);
+              },
               undefined,
-              () => {
+              (err) => {
+                console.error("[Gallery] Failed to load:", img.src, err);
                 // On error, create a small colored placeholder texture
                 const canvas = document.createElement("canvas");
                 canvas.width = 2;
