@@ -177,8 +177,6 @@ function GalleryScene({
   },
 }: Omit<InfiniteGalleryProps, "className" | "style">) {
   const [scrollVelocity, setScrollVelocity] = useState(0);
-  const [autoPlay, setAutoPlay] = useState(true);
-  const lastInteraction = useRef(Date.now());
 
   const normalizedImages = useMemo(
     () =>
@@ -236,13 +234,14 @@ function GalleryScene({
 
   const spatialPositions = useMemo(() => {
     const positions: { x: number; y: number }[] = [];
+    // Use golden ratio to spread images evenly across full viewport
+    const goldenRatio = 1.618033988749895;
     for (let i = 0; i < visibleCount; i++) {
-      const horizontalAngle = (i * 2.618) % (Math.PI * 2);
-      const verticalAngle = (i * 1.618 + Math.PI / 3) % (Math.PI * 2);
-      const horizontalRadius = (i % 3) * 1.2;
-      const verticalRadius = ((i + 1) % 4) * 0.8;
-      const x = (Math.sin(horizontalAngle) * horizontalRadius * MAX_HORIZONTAL_OFFSET) / 3;
-      const y = (Math.cos(verticalAngle) * verticalRadius * MAX_VERTICAL_OFFSET) / 4;
+      // Halton-like sequence for even distribution across the full area
+      const t = (i * goldenRatio) % 1;
+      const s = ((i * goldenRatio * 0.7 + 0.3) % 1);
+      const x = (t - 0.5) * 2 * MAX_HORIZONTAL_OFFSET;
+      const y = (s - 0.5) * 2 * MAX_VERTICAL_OFFSET;
       positions.push({ x, y });
     }
     return positions;
@@ -271,57 +270,15 @@ function GalleryScene({
     }));
   }, [depthRange, spatialPositions, totalImages, visibleCount]);
 
-  const handleWheel = useCallback(
-    (event: WheelEvent) => {
-      event.preventDefault();
-      setScrollVelocity((prev) => prev + event.deltaY * 0.01 * speed);
-      setAutoPlay(false);
-      lastInteraction.current = Date.now();
-    },
-    [speed]
-  );
-
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
-        setScrollVelocity((prev) => prev - 2 * speed);
-        setAutoPlay(false);
-        lastInteraction.current = Date.now();
-      } else if (event.key === "ArrowDown" || event.key === "ArrowRight") {
-        setScrollVelocity((prev) => prev + 2 * speed);
-        setAutoPlay(false);
-        lastInteraction.current = Date.now();
-      }
-    },
-    [speed]
-  );
-
-  useEffect(() => {
-    const canvas = document.querySelector("canvas");
-    if (canvas) {
-      canvas.addEventListener("wheel", handleWheel, { passive: false });
-      document.addEventListener("keydown", handleKeyDown);
-      return () => {
-        canvas.removeEventListener("wheel", handleWheel);
-        document.removeEventListener("keydown", handleKeyDown);
-      };
-    }
-  }, [handleWheel, handleKeyDown]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (Date.now() - lastInteraction.current > 3000) {
-        setAutoPlay(true);
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  // Gallery is autoplay-only — no scroll/keyboard hijacking
+  // so the page scrolls normally past the hero section
 
   useFrame((state, delta) => {
-    if (autoPlay) {
-      setScrollVelocity((prev) => prev + 0.3 * delta);
-    }
-    setScrollVelocity((prev) => prev * 0.95);
+    // Always autoplay — gentle constant drift
+    setScrollVelocity((prev) => {
+      const target = 0.3 * delta;
+      return prev * 0.95 + target;
+    });
 
     const time = state.clock.getElapsedTime();
     materials.forEach((material) => {

@@ -53,10 +53,10 @@ export function Navbar() {
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-semibold uppercase tracking-[0.25em] text-[#043565]">
+            <span className={`text-xl font-semibold uppercase tracking-[0.25em] transition-colors duration-300 ${isScrolled ? "text-[#043565]" : "text-white"}`}>
               Awaken
             </span>
-            <span className="text-xl font-light uppercase tracking-[0.25em] text-[#043565]">
+            <span className={`text-xl font-light uppercase tracking-[0.25em] transition-colors duration-300 ${isScrolled ? "text-[#043565]" : "text-white"}`}>
               Visuals
             </span>
           </Link>
@@ -73,7 +73,7 @@ export function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    className="flex items-center gap-1 text-[13px] font-medium uppercase tracking-[0.15em] text-[#1A1A1A] transition-colors hover:text-[#C8A84E]"
+                    className={`flex items-center gap-1 text-[13px] font-medium uppercase tracking-[0.15em] transition-colors hover:text-[#C8A84E] ${isScrolled ? "text-[#1A1A1A]" : "text-white"}`}
                   >
                     {link.label}
                     <ChevronDown className="h-3 w-3" />
@@ -104,7 +104,7 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-[13px] font-medium uppercase tracking-[0.15em] text-[#1A1A1A] transition-colors hover:text-[#C8A84E]"
+                  className={`text-[13px] font-medium uppercase tracking-[0.15em] transition-colors hover:text-[#C8A84E] ${isScrolled ? "text-[#1A1A1A]" : "text-white"}`}
                 >
                   {link.label}
                 </Link>
@@ -115,7 +115,7 @@ export function Navbar() {
           {/* Mobile Hamburger */}
           <button
             onClick={() => setIsMobileOpen(true)}
-            className="text-[#1A1A1A] md:hidden"
+            className={`md:hidden transition-colors duration-300 ${isScrolled ? "text-[#1A1A1A]" : "text-white"}`}
             aria-label="Open menu"
           >
             <Menu className="h-6 w-6" />
