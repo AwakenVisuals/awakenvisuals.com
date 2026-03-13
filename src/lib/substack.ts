@@ -5,7 +5,7 @@ let cachedPosts: BlogPost[] | null = null;
 let cacheTimestamp = 0;
 const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
 
-const DEFAULT_FEED_URL = "https://example.substack.com/feed";
+const DEFAULT_FEED_URL = process.env.NEXT_PUBLIC_SUBSTACK_FEED_URL || "https://example.substack.com/feed";
 
 function parseDate(dateStr: string): string {
   try {
