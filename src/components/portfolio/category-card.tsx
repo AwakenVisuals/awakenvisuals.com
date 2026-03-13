@@ -30,24 +30,28 @@ export function CategoryCard({
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
     >
-      <Link href={href} className="group relative block aspect-[16/9] overflow-hidden rounded-lg">
-        <div className="absolute inset-0 z-10 border-2 border-transparent transition-colors duration-500 group-hover:border-[#FFC95C] rounded-lg" />
+      <Link
+        href={href}
+        className="group relative block aspect-[3/4] md:aspect-[4/5] overflow-hidden"
+      >
         <Image
           src={image}
           alt={alt}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
-        <div className="absolute inset-0 z-[5] bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-        <div className="absolute inset-0 z-[5] bg-[#043565]/20 transition-colors duration-500 group-hover:bg-[#043565]/10" />
-        <div className="absolute bottom-0 left-0 right-0 z-10 p-6 md:p-8 lg:p-10">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-opacity duration-500" />
+        <div className="absolute inset-0 flex flex-col items-center justify-end pb-12 md:pb-16">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light uppercase tracking-[0.2em] text-white">
             {title}
           </h2>
-          <p className="mt-2 text-lg md:text-xl text-[#FFC95C] font-medium">
+          <p className="mt-3 text-sm tracking-[0.15em] uppercase text-white/70">
             {subtitle}
           </p>
+          <span className="mt-6 inline-block text-[13px] uppercase tracking-[0.2em] text-[#C8A84E] opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+            View Collection
+          </span>
         </div>
       </Link>
     </motion.div>

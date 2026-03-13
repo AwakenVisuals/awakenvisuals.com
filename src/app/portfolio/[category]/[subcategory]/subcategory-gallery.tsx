@@ -37,13 +37,13 @@ export function SubcategoryGallery({
   }));
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#043565] to-[#1F2F16]">
+    <main className="min-h-screen bg-[#F7F5F0]">
       {/* Header */}
       <section className="px-6 pt-28 pb-8 md:pt-36 md:pb-12">
         <div className="mx-auto max-w-7xl">
           <Link
             href={`/portfolio/${category}`}
-            className="inline-flex items-center gap-2 text-sm text-[#95B8D1] transition-colors hover:text-[#FFC95C] mb-8"
+            className="inline-flex items-center gap-2 text-[13px] uppercase tracking-[0.15em] text-[#1A1A1A]/40 transition-colors hover:text-[#C8A84E] mb-10"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -54,21 +54,21 @@ export function SubcategoryGallery({
             animate={isHeadingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            <h1 className="text-5xl font-bold tracking-tight text-white md:text-6xl lg:text-7xl">
+            <h1 className="text-5xl font-light uppercase tracking-[0.15em] text-[#1A1A1A] md:text-6xl lg:text-7xl">
               {title}
             </h1>
             {description && (
-              <p className="mt-4 max-w-lg text-lg text-[#95B8D1] normal-case">
+              <p className="mt-4 max-w-lg text-base text-[#1A1A1A]/50 tracking-wide normal-case">
                 {description}
               </p>
             )}
-            <div className="mt-6 h-px w-24 bg-[#FFC95C]" />
+            <div className="mt-8 h-px w-16 bg-[#C8A84E]" />
           </motion.div>
         </div>
       </section>
 
       {/* Masonry Gallery */}
-      <section className="px-6 pb-24 md:px-10">
+      <section className="px-6 pb-32 md:px-10">
         <div className="mx-auto max-w-7xl columns-1 gap-4 sm:columns-2 lg:columns-3">
           {images.map((image, index) => (
             <GalleryItem
@@ -133,17 +133,16 @@ function GalleryItem({
     >
       <button
         onClick={onClick}
-        className={`group relative block w-full overflow-hidden rounded-lg ${aspect}`}
+        className={`group relative block w-full overflow-hidden ${aspect}`}
       >
         <Image
           src={image.src}
           alt={image.alt}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-        <div className="absolute inset-0 border-2 border-transparent transition-colors duration-500 group-hover:border-[#FFC95C]/40 rounded-lg" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       </button>
     </motion.div>
   );

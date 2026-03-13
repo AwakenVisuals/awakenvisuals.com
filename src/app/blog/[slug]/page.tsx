@@ -33,15 +33,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   if (!post) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center bg-[#043565]">
+      <main className="flex min-h-screen flex-col items-center justify-center bg-[#F7F5F0]">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-white">Post Not Found</h1>
-          <p className="mt-4 text-lg text-[#95B8D1]">
+          <h1 className="text-4xl font-bold text-[#043565]">Post Not Found</h1>
+          <p className="mt-4 text-lg text-[#1A1A1A]/60">
             The post you&apos;re looking for doesn&apos;t exist or has been removed.
           </p>
           <Link
             href="/blog"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#FFC95C] px-6 py-3 text-sm font-semibold text-[#043565] transition-colors hover:bg-[#FFC95C]/90"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#043565] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#043565]/90"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -60,7 +60,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   });
 
   return (
-    <main className="min-h-screen bg-[#043565]">
+    <main className="min-h-screen bg-[#F7F5F0]">
       {/* Hero Image */}
       {post.coverImage && (
         <div className="relative h-[50vh] min-h-[400px] w-full md:h-[60vh]">
@@ -72,7 +72,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             priority
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#043565] via-[#043565]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#F7F5F0] via-[#F7F5F0]/30 to-transparent" />
         </div>
       )}
 
@@ -108,26 +108,26 @@ function PostContent({
   return (
     <article>
       {/* Meta */}
-      <div className="mb-6 flex items-center gap-3 text-sm text-[#95B8D1]">
+      <div className="mb-6 flex items-center gap-3 text-sm text-[#1A1A1A]/50">
         <time>{date}</time>
-        <span className="h-1 w-1 rounded-full bg-[#95B8D1]" />
+        <span className="h-1 w-1 rounded-full bg-[#1A1A1A]/30" />
         <span>{author}</span>
       </div>
 
       {/* Title */}
-      <h1 className="text-3xl font-bold leading-tight text-[#FFC95C] md:text-4xl lg:text-5xl">
+      <h1 className="text-3xl font-bold leading-tight text-[#043565] md:text-4xl lg:text-5xl">
         {title}
       </h1>
 
       {/* Article Body */}
       {content ? (
         <div
-          className="prose-invert prose-lg mt-10 max-w-none prose-headings:text-white prose-p:text-white/80 prose-a:text-[#FFC95C] prose-a:no-underline hover:prose-a:underline prose-strong:text-white prose-blockquote:border-[#FFC95C] prose-blockquote:text-white/70 prose-img:rounded-xl"
+          className="prose prose-lg mt-10 max-w-none prose-headings:text-[#043565] prose-p:text-[#1A1A1A]/80 prose-a:text-[#C8A84E] prose-a:no-underline hover:prose-a:underline prose-strong:text-[#1A1A1A] prose-blockquote:border-[#C8A84E] prose-blockquote:text-[#1A1A1A]/60 prose-img:rounded-xl"
           dangerouslySetInnerHTML={{ __html: content }}
         />
       ) : (
         <div className="mt-10">
-          <p className="text-lg text-white/70">
+          <p className="text-lg text-[#1A1A1A]/60">
             This post is available on Substack.
           </p>
           {link && link !== "#" && (
@@ -135,7 +135,7 @@ function PostContent({
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 text-[#FFC95C] hover:underline"
+              className="mt-4 inline-flex items-center gap-2 text-[#C8A84E] hover:underline"
             >
               Read on Substack
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -147,10 +147,10 @@ function PostContent({
       )}
 
       {/* Back Link */}
-      <div className="mt-16 border-t border-white/10 pt-8 pb-24">
+      <div className="mt-16 border-t border-[#1A1A1A]/10 pt-8 pb-24">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-sm font-medium text-[#FFC95C] transition-colors hover:text-[#FFC95C]/80"
+          className="inline-flex items-center gap-2 text-sm font-medium text-[#C8A84E] transition-colors hover:text-[#C8A84E]/80"
         >
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />

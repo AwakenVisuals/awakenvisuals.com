@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { fetchSubstackPosts } from "@/lib/substack";
-import { SectionHeading } from "@/components/shared/section-heading";
 import { BlogGrid } from "./blog-grid";
 import type { BlogPost } from "@/types";
 
@@ -87,15 +86,19 @@ export default async function BlogPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#043565]">
+    <main className="min-h-screen bg-[#F7F5F0]">
       {/* Header */}
       <section className="pb-8 pt-32 md:pt-40">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-            title="Journal"
-            subtitle="Stories, insights, and behind-the-scenes from our adventures"
-            gold
-          />
+          <div className="mb-12 md:mb-16">
+            <h1 className="text-5xl font-bold tracking-[0.06em] text-[#043565] md:text-6xl lg:text-7xl">
+              Journal
+            </h1>
+            <p className="mt-4 text-lg text-[#1A1A1A]/60 md:text-xl">
+              Stories, insights, and behind-the-scenes from our adventures
+            </p>
+            <div className="mt-6 h-px w-20 bg-[#C8A84E]" />
+          </div>
         </div>
       </section>
 

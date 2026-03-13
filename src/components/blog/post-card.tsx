@@ -23,7 +23,7 @@ export function PostCard({ post }: PostCardProps) {
       className="group"
     >
       <Link href={`/blog/${post.slug}`} className="block">
-        <div className="overflow-hidden rounded-xl border border-white/5 bg-[#043565]/30 transition-colors duration-300 hover:border-[#FFC95C]/40">
+        <div className="overflow-hidden rounded-xl border border-[#1A1A1A]/5 bg-white transition-colors duration-300 hover:border-[#C8A84E]/30">
           {/* Cover Image */}
           <div className="relative aspect-[16/10] overflow-hidden">
             <Image
@@ -36,24 +36,23 @@ export function PostCard({ post }: PostCardProps) {
               className="object-cover transition-transform duration-500 group-hover:scale-105"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
           </div>
 
           {/* Content */}
           <div className="p-5 md:p-6">
-            <time className="text-xs font-medium uppercase tracking-wider text-[#95B8D1]">
+            <time className="text-xs font-medium uppercase tracking-wider text-[#C8A84E]">
               {formattedDate}
             </time>
 
-            <h3 className="mt-2 text-lg font-semibold leading-snug text-white transition-colors duration-300 group-hover:text-[#FFC95C] md:text-xl">
+            <h3 className="mt-2 text-lg font-semibold leading-snug text-[#1A1A1A] transition-colors duration-300 group-hover:text-[#043565] md:text-xl">
               {post.title}
             </h3>
 
-            <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-white/60">
+            <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-[#1A1A1A]/50">
               {post.excerpt}
             </p>
 
-            <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#FFC95C]">
+            <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#043565]">
               Read More
               <svg
                 className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"

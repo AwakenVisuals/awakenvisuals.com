@@ -37,58 +37,58 @@ const placeholderPosts = [
 
 export function BlogPreview() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="bg-[#043565] py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section ref={ref} className="bg-[#F7F5F0] py-24 md:py-32">
+      <div className="mx-auto max-w-6xl px-6 lg:px-8">
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="mb-16 text-center"
+          transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
+          className="mb-16"
         >
-          <h2 className="text-3xl font-bold tracking-[0.1em] text-[#FFC95C] md:text-5xl">
+          <h2 className="text-3xl font-light tracking-[0.1em] text-[#1A1A1A] md:text-4xl">
             Journal
           </h2>
-          <p className="mt-4 text-lg text-[#95B8D1] normal-case">
-            Stories from the field and behind the scenes
-          </p>
+          <div className="mt-4 h-px w-12 bg-[#C8A84E]" />
         </motion.div>
 
+        {/* Post Cards */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {placeholderPosts.map((post, index) => (
             <motion.article
               key={post.slug}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{
                 duration: 0.7,
-                delay: index * 0.15,
+                delay: index * 0.12,
                 ease: [0.25, 0.4, 0.25, 1],
               }}
             >
               <Link
                 href={`/blog/${post.slug}`}
-                className="group block overflow-hidden rounded-lg bg-[#043565] border border-white/5 transition-colors hover:border-[#FFC95C]/20"
+                className="group block bg-white"
               >
-                <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="relative aspect-[3/2] overflow-hidden">
                   <Image
                     src={post.image}
                     alt={post.title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>
                 <div className="p-6">
-                  <span className="text-xs font-medium uppercase tracking-[0.2em] text-[#FFC95C]">
+                  <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#1A1A1A]/40">
                     {post.date}
                   </span>
-                  <h3 className="mt-2 text-lg font-bold tracking-wider text-white group-hover:text-[#FFC95C] transition-colors">
+                  <h3 className="mt-3 text-base font-medium leading-snug tracking-wide text-[#1A1A1A] transition-colors duration-300 group-hover:text-[#C8A84E]">
                     {post.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[#95B8D1]/70 normal-case">
+                  <p className="mt-2 text-sm leading-relaxed text-[#1A1A1A]/50">
                     {post.excerpt}
                   </p>
                 </div>
@@ -97,17 +97,18 @@ export function BlogPreview() {
           ))}
         </div>
 
+        {/* View All Link */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-12 text-center"
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mt-16 text-center"
         >
           <Link
             href="/blog"
-            className="inline-block rounded-full border-2 border-[#FFC95C] px-10 py-3 text-sm font-semibold uppercase tracking-[0.15em] text-[#FFC95C] transition-all hover:bg-[#FFC95C] hover:text-[#043565]"
+            className="inline-block border-b border-[#1A1A1A]/20 pb-1 text-xs font-medium uppercase tracking-[0.2em] text-[#1A1A1A] transition-colors duration-300 hover:border-[#C8A84E] hover:text-[#C8A84E]"
           >
-            Read All Posts
+            View All Posts
           </Link>
         </motion.div>
       </div>

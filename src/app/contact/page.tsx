@@ -36,7 +36,7 @@ export default function ContactPage() {
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#043565] to-[#1F2F16]">
+    <main className="min-h-screen bg-[#F7F5F0]">
       {/* Header */}
       <section className="pb-8 pt-32 md:pt-40">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -45,14 +45,14 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            <h1 className="text-5xl font-bold tracking-[0.1em] text-white md:text-6xl lg:text-7xl">
+            <h1 className="text-5xl font-bold tracking-[0.06em] text-[#043565] md:text-6xl lg:text-7xl">
               Contact
             </h1>
-            <p className="mt-4 max-w-lg text-lg text-[#95B8D1] normal-case">
+            <p className="mt-4 max-w-lg text-lg text-[#1A1A1A]/60">
               Have a project in mind or want to collaborate? We&apos;d love to
               hear from you.
             </p>
-            <div className="mt-6 h-px w-20 bg-[#FFC95C]" />
+            <div className="mt-6 h-px w-20 bg-[#C8A84E]" />
           </motion.div>
         </div>
       </section>
@@ -67,10 +67,10 @@ export default function ContactPage() {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
             >
-              <h2 className="text-2xl font-bold tracking-wider text-[#FFC95C]">
+              <h2 className="text-2xl font-bold tracking-wider text-[#043565]">
                 Get in Touch
               </h2>
-              <p className="mt-4 text-[#95B8D1]/80 normal-case leading-relaxed">
+              <p className="mt-4 leading-relaxed text-[#1A1A1A]/60">
                 Whether you need coverage for a sporting event, travel content
                 for your brand, or a creative visual project — reach out and
                 let&apos;s start a conversation.
@@ -85,11 +85,11 @@ export default function ContactPage() {
                     transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
                     className="flex items-start gap-4"
                   >
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#FFC95C]/10">
-                      <item.icon className="h-5 w-5 text-[#FFC95C]" />
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#043565]/5">
+                      <item.icon className="h-5 w-5 text-[#043565]" />
                     </div>
                     <div>
-                      <p className="text-sm uppercase tracking-[0.15em] text-[#95B8D1]/50">
+                      <p className="text-sm uppercase tracking-[0.15em] text-[#1A1A1A]/40">
                         {item.label}
                       </p>
                       {item.href ? (
@@ -97,12 +97,12 @@ export default function ContactPage() {
                           href={item.href}
                           target={item.href.startsWith("http") ? "_blank" : undefined}
                           rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                          className="mt-1 text-lg font-medium text-white transition-colors hover:text-[#FFC95C] normal-case"
+                          className="mt-1 text-lg font-medium text-[#1A1A1A] transition-colors hover:text-[#C8A84E]"
                         >
                           {item.value}
                         </a>
                       ) : (
-                        <p className="mt-1 text-lg font-medium text-white normal-case">
+                        <p className="mt-1 text-lg font-medium text-[#1A1A1A]">
                           {item.value}
                         </p>
                       )}
@@ -121,12 +121,12 @@ export default function ContactPage() {
               <form
                 action="https://formspree.io/f/YOUR_FORM_ID"
                 method="POST"
-                className="space-y-6 rounded-xl border border-white/5 bg-white/[0.02] p-8"
+                className="space-y-6 rounded-xl border border-[#1A1A1A]/10 bg-white p-8"
               >
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-sm uppercase tracking-[0.15em] text-[#95B8D1]/70"
+                    className="block text-sm uppercase tracking-[0.15em] text-[#1A1A1A]/50"
                   >
                     Name
                   </label>
@@ -135,7 +135,7 @@ export default function ContactPage() {
                     id="name"
                     name="name"
                     required
-                    className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/30 focus:border-[#FFC95C] focus:outline-none focus:ring-1 focus:ring-[#FFC95C] transition-colors"
+                    className="mt-2 w-full rounded-lg border border-[#1A1A1A]/10 bg-[#F7F5F0] px-4 py-3 text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:border-[#043565] focus:outline-none focus:ring-1 focus:ring-[#043565] transition-colors"
                     placeholder="Your name"
                   />
                 </div>
@@ -143,7 +143,7 @@ export default function ContactPage() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm uppercase tracking-[0.15em] text-[#95B8D1]/70"
+                    className="block text-sm uppercase tracking-[0.15em] text-[#1A1A1A]/50"
                   >
                     Email
                   </label>
@@ -152,7 +152,7 @@ export default function ContactPage() {
                     id="email"
                     name="email"
                     required
-                    className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/30 focus:border-[#FFC95C] focus:outline-none focus:ring-1 focus:ring-[#FFC95C] transition-colors"
+                    className="mt-2 w-full rounded-lg border border-[#1A1A1A]/10 bg-[#F7F5F0] px-4 py-3 text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:border-[#043565] focus:outline-none focus:ring-1 focus:ring-[#043565] transition-colors"
                     placeholder="your@email.com"
                   />
                 </div>
@@ -160,28 +160,28 @@ export default function ContactPage() {
                 <div>
                   <label
                     htmlFor="subject"
-                    className="block text-sm uppercase tracking-[0.15em] text-[#95B8D1]/70"
+                    className="block text-sm uppercase tracking-[0.15em] text-[#1A1A1A]/50"
                   >
                     Subject
                   </label>
                   <select
                     id="subject"
                     name="subject"
-                    className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white focus:border-[#FFC95C] focus:outline-none focus:ring-1 focus:ring-[#FFC95C] transition-colors"
+                    className="mt-2 w-full rounded-lg border border-[#1A1A1A]/10 bg-[#F7F5F0] px-4 py-3 text-[#1A1A1A] focus:border-[#043565] focus:outline-none focus:ring-1 focus:ring-[#043565] transition-colors"
                   >
-                    <option value="sport" className="bg-[#043565]">Sport Photography</option>
-                    <option value="travel" className="bg-[#043565]">Travel Photography</option>
-                    <option value="video" className="bg-[#043565]">Videography</option>
-                    <option value="content" className="bg-[#043565]">Content Creation</option>
-                    <option value="collaboration" className="bg-[#043565]">Collaboration</option>
-                    <option value="other" className="bg-[#043565]">Other</option>
+                    <option value="sport">Sport Photography</option>
+                    <option value="travel">Travel Photography</option>
+                    <option value="video">Videography</option>
+                    <option value="content">Content Creation</option>
+                    <option value="collaboration">Collaboration</option>
+                    <option value="other">Other</option>
                   </select>
                 </div>
 
                 <div>
                   <label
                     htmlFor="message"
-                    className="block text-sm uppercase tracking-[0.15em] text-[#95B8D1]/70"
+                    className="block text-sm uppercase tracking-[0.15em] text-[#1A1A1A]/50"
                   >
                     Message
                   </label>
@@ -190,14 +190,14 @@ export default function ContactPage() {
                     name="message"
                     rows={5}
                     required
-                    className="mt-2 w-full resize-none rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/30 focus:border-[#FFC95C] focus:outline-none focus:ring-1 focus:ring-[#FFC95C] transition-colors"
+                    className="mt-2 w-full resize-none rounded-lg border border-[#1A1A1A]/10 bg-[#F7F5F0] px-4 py-3 text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:border-[#043565] focus:outline-none focus:ring-1 focus:ring-[#043565] transition-colors"
                     placeholder="Tell us about your project..."
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full rounded-full bg-[#FFC95C] py-4 text-sm font-semibold uppercase tracking-[0.15em] text-[#043565] transition-all hover:bg-[#FFC95C]/90 hover:shadow-lg hover:shadow-[#FFC95C]/20"
+                  className="w-full rounded-full bg-[#043565] py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white transition-all hover:bg-[#043565]/90"
                 >
                   Send Message
                 </button>

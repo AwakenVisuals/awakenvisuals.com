@@ -10,56 +10,40 @@ const subcategoryData: Record<
       title: "Football",
       description: "The beautiful game captured in stunning detail",
     },
-    rugby: {
-      title: "Rugby",
-      description: "Raw power and determination on the pitch",
+    "formula-e": {
+      title: "Formula E",
+      description: "Electric racing at the cutting edge of motorsport",
     },
-    athletics: {
-      title: "Athletics",
-      description: "Human performance at its absolute peak",
+    "formula-1": {
+      title: "Formula 1",
+      description: "The pinnacle of speed, precision, and engineering",
     },
-    motorsport: {
-      title: "Motorsport",
-      description: "Speed, precision, and engineering excellence",
+    wec: {
+      title: "WEC",
+      description: "Endurance racing across the world's greatest circuits",
     },
-    boxing: {
-      title: "Boxing",
-      description: "Courage and skill inside the ring",
+    sportscars: {
+      title: "Sportscars",
+      description: "Performance machines in their element",
     },
-    swimming: {
-      title: "Swimming",
-      description: "Grace and power through water",
+    "single-seaters": {
+      title: "Single Seaters",
+      description: "Open-wheel racing from grassroots to grand prix",
     },
   },
   travel: {
-    landscapes: {
-      title: "Landscapes",
-      description: "Natural wonders from across the globe",
+    travel: {
+      title: "Travel",
+      description: "Global destinations through a cinematic lens",
     },
-    street: {
-      title: "Street",
-      description: "Life unfolding in the world's great cities",
-    },
-    architecture: {
-      title: "Architecture",
-      description: "Structures that define our built environment",
-    },
-    wildlife: {
-      title: "Wildlife",
-      description: "The animal kingdom in its natural habitat",
-    },
-    culture: {
-      title: "Culture",
-      description: "Traditions and stories from every corner",
-    },
-    aerial: {
-      title: "Aerial",
-      description: "The world from a breathtaking perspective",
+    edits: {
+      title: "Edits",
+      description: "Creative post-production and visual storytelling",
     },
   },
 };
 
-// 12 varied unsplash images used as gallery placeholders
+// Varied unsplash images used as gallery placeholders
 const galleryImages = [
   "photo-1506905925346-21bda4d32df4",
   "photo-1480714378408-67cf0d13bc1b",
@@ -70,9 +54,9 @@ const galleryImages = [
   "photo-1574629810360-7efbbe195018",
   "photo-1552674605-db6ffd4facb5",
   "photo-1568605117036-5fe5e7bab0b7",
-  "photo-1549719386-74dfcbf7dbed",
-  "photo-1530549387789-4c1017266635",
-  "photo-1544919982-01711c0eca7e",
+  "photo-1541252260730-0412e8e2108e",
+  "photo-1544636331-e26879cd4d9b",
+  "photo-1504817343863-5092a923803e",
 ];
 
 type Props = {
