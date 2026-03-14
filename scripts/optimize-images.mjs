@@ -11,10 +11,10 @@
  * 3. Optimized versions appear in public/gallery/ ready for the site
  *
  * Settings:
- * - Max width: 1920px (plenty for a background gallery)
- * - Quality: 85 (sharp, no visible compression artefacts)
+ * - Max width: 2560px (sharp on high-res displays)
+ * - Quality: 92 (high quality, no visible compression artefacts)
  * - Format: JPEG (best for photos, WebGL compatible)
- * - Typical output: 200-500KB per image (down from 2-5MB originals)
+ * - Typical output: 800KB-1.5MB per image (down from 3-10MB originals)
  */
 
 import sharp from "sharp";
@@ -23,8 +23,8 @@ import { join, extname, basename } from "path";
 
 const ORIGINALS_DIR = join(process.cwd(), "public/gallery/originals");
 const OUTPUT_DIR = join(process.cwd(), "public/gallery");
-const MAX_WIDTH = 1920;
-const QUALITY = 85;
+const MAX_WIDTH = 2560;
+const QUALITY = 95;
 
 const IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".tiff", ".bmp"];
 

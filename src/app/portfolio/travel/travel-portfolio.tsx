@@ -1,40 +1,17 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import { motion, useInView, AnimatePresence } from "motion/react";
+import type { YouTubeVideo } from "@/lib/youtube";
 
-/*
- * ============================================
- * PORTFOLIO FILTERS - EDIT HERE TO ADD/REMOVE
- * ============================================
- * To add a new filter (e.g., "Norway"):
- * 1. Add a new entry: { id: "norway", label: "Norway" }
- * 2. Add images to the portfolioImages array below with category: "norway"
- * 3. Add your images to the /public/portfolio/travel/ folder
- * ============================================
- */
 const filters = [
   { id: "all", label: "All" },
   { id: "travel", label: "Travel" },
   { id: "edits", label: "Edits" },
+  { id: "videos", label: "Videos" },
 ];
 
-/*
- * ============================================
- * PORTFOLIO IMAGES - EDIT HERE TO ADD/REMOVE
- * ============================================
- * Each image needs:
- * - src: path to your image (put in /public/portfolio/travel/)
- * - alt: description of the image
- * - category: must match a filter id above
- * - width: image width in pixels (for aspect ratio calculation)
- * - height: image height in pixels (for aspect ratio calculation)
- *
- * Example:
- * { src: "/portfolio/travel/japan-temple.jpg", alt: "Temple in Kyoto", category: "travel", width: 3000, height: 4500 },
- * ============================================
- */
 interface PortfolioImage {
   src: string;
   alt: string;
@@ -43,25 +20,69 @@ interface PortfolioImage {
   height: number;
 }
 
-const portfolioImages: PortfolioImage[] = [
-  // Travel
+const LOCAL_IMAGES: PortfolioImage[] = [
   { src: "/gallery/hero-3.jpg", alt: "Travel photography", category: "travel", width: 4000, height: 6000 },
   { src: "/gallery/hero-7.jpg", alt: "Landscape photography", category: "travel", width: 3000, height: 2000 },
   { src: "/gallery/hero-9.jpg", alt: "Adventure destination", category: "travel", width: 4000, height: 6000 },
-  // Edits
   { src: "/gallery/hero-4.jpg", alt: "Creative edit", category: "edits", width: 6000, height: 4000 },
   { src: "/gallery/hero-8.jpg", alt: "Photo edit", category: "edits", width: 3000, height: 4500 },
   { src: "/gallery/hero-10.jpg", alt: "Visual edit", category: "edits", width: 6000, height: 4000 },
 ];
 
-export function TravelPortfolio() {
+interface GalleryItem {
+  id: string;
+  type: "photo" | "video";
+  src: string;
+  alt: string;
+  category: string;
+  width: number;
+  height: number;
+  videoId?: string;
+}
+
+interface TravelPortfolioProps {
+  driveImages?: PortfolioImage[];
+  videos?: YouTubeVideo[];
+}
+
+export function TravelPortfolio({ driveImages = [], videos = [] }: TravelPortfolioProps) {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const headingRef = useRef(null);
   const isHeadingInView = useInView(headingRef, { once: true });
 
-  const filteredImages = activeFilter === "all"
-    ? portfolioImages
-    : portfolioImages.filter(img => img.category === activeFilter);
+  const portfolioImages = driveImages.length > 0 ? driveImages : LOCAL_IMAGES;
+
+  const allItems: GalleryItem[] = [
+    ...portfolioImages.map((img, i) => ({
+      id: `photo-${i}`,
+      type: "photo" as const,
+      src: img.src,
+      alt: img.alt,
+      category: img.category,
+      width: img.width,
+      height: img.height,
+    })),
+    ...videos.map((video) => ({
+      id: `video-${video.id}`,
+      type: "video" as const,
+      src: video.thumbnailUrl,
+      alt: video.title,
+      category: "videos",
+      width: 1280,
+      height: 720,
+      videoId: video.id,
+    })),
+  ];
+
+  const filteredItems =
+    activeFilter === "all"
+      ? allItems
+      : allItems.filter((item) => item.category === activeFilter);
+
+  const closeLightbox = useCallback(() => setActiveVideoId(null), []);
+
+  const visibleFilters = videos.length > 0 ? filters : filters.filter((f) => f.id !== "videos");
 
   return (
     <main className="min-h-screen bg-[#043565]">
@@ -87,7 +108,7 @@ export function TravelPortfolio() {
 
           {/* Filter Tabs */}
           <div className="mt-10 flex flex-wrap justify-center gap-3">
-            {filters.map((filter) => (
+            {visibleFilters.map((filter) => (
               <button
                 key={filter.id}
                 onClick={() => setActiveFilter(filter.id)}
@@ -104,41 +125,107 @@ export function TravelPortfolio() {
         </div>
       </section>
 
-      {/* Gallery Grid */}
+      {/* Gallery Grid — photos and videos mixed */}
       <section className="px-6 pb-32 md:px-10">
         <div className="mx-auto max-w-7xl">
           <div className="columns-2 gap-4 md:columns-3 xl:columns-4">
             <AnimatePresence mode="popLayout">
-              {filteredImages.map((image, index) => (
+              {filteredItems.map((item, index) => (
                 <motion.div
-                  key={image.src}
+                  key={item.id}
                   layout
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className="mb-4 break-inside-avoid overflow-hidden group"
+                  className="mb-4 break-inside-avoid overflow-hidden group relative"
                 >
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    width={image.width}
-                    height={image.height}
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    className="w-full h-auto transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
+                  {item.type === "video" ? (
+                    <button
+                      onClick={() => setActiveVideoId(item.videoId!)}
+                      className="relative block w-full"
+                    >
+                      <Image
+                        src={item.src}
+                        alt={item.alt}
+                        width={item.width}
+                        height={item.height}
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        className="w-full h-auto transition-transform duration-700 ease-out group-hover:scale-105"
+                        unoptimized
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors duration-300 group-hover:bg-black/40">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#F5A300]/90 transition-transform duration-300 group-hover:scale-110">
+                          <svg viewBox="0 0 24 24" fill="white" className="ml-1 h-6 w-6">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      </div>
+                    </button>
+                  ) : (
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      width={item.width}
+                      height={item.height}
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      className="w-full h-auto transition-transform duration-700 ease-out group-hover:scale-105"
+                      unoptimized={item.src.startsWith("https://")}
+                    />
+                  )}
                 </motion.div>
               ))}
             </AnimatePresence>
           </div>
 
-          {filteredImages.length === 0 && (
+          {filteredItems.length === 0 && (
             <div className="py-20 text-center">
-              <p className="text-white/40 text-lg">No images in this category yet.</p>
+              <p className="text-white/40 text-lg">No items in this category yet.</p>
             </div>
           )}
         </div>
       </section>
+
+      {/* Video Lightbox */}
+      <AnimatePresence>
+        {activeVideoId && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 p-4 md:p-10"
+            onClick={closeLightbox}
+          >
+            <button
+              onClick={closeLightbox}
+              className="absolute top-6 right-6 z-10 text-white/70 transition-colors hover:text-white"
+              aria-label="Close video"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-8 w-8">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="w-full max-w-5xl aspect-video"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${activeVideoId}?autoplay=1&rel=0&modestbranding=1`}
+                title="Video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="h-full w-full"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

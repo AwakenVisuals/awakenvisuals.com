@@ -1,156 +1,126 @@
-import type { MediaItem } from "@/types";
+/**
+ * Google Drive Integration
+ * ========================
+ * Fetches portfolio images from shared Google Drive folders.
+ *
+ * SETUP:
+ * 1. Create folders in Google Drive for each category
+ * 2. Share each folder as "Anyone with the link can view"
+ * 3. Add the folder IDs to .env.local
+ * 4. Name files with a number prefix to control order: 01-silverstone.jpg, 02-monza.jpg
+ *
+ * Images are served via Google's CDN with automatic resizing — no optimization needed.
+ */
 
-// Configure GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY env var for production
-
-const PLACEHOLDER_IMAGES: MediaItem[] = [
-  {
-    id: "ph-1",
-    name: "Mountain Trail Running",
-    url: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=1200&q=80",
-    thumbnailUrl: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&q=80",
-    mimeType: "image/jpeg",
-    width: 1200,
-    height: 800,
-    createdTime: "2024-01-15T10:00:00Z",
-  },
-  {
-    id: "ph-2",
-    name: "Surfing at Sunset",
-    url: "https://images.unsplash.com/photo-1502680390548-bdbac40551ce?w=1200&q=80",
-    thumbnailUrl: "https://images.unsplash.com/photo-1502680390548-bdbac40551ce?w=400&q=80",
-    mimeType: "image/jpeg",
-    width: 1200,
-    height: 800,
-    createdTime: "2024-02-10T14:30:00Z",
-  },
-  {
-    id: "ph-3",
-    name: "Rock Climbing Adventure",
-    url: "https://images.unsplash.com/photo-1522163182402-834f871fd851?w=1200&q=80",
-    thumbnailUrl: "https://images.unsplash.com/photo-1522163182402-834f871fd851?w=400&q=80",
-    mimeType: "image/jpeg",
-    width: 1200,
-    height: 800,
-    createdTime: "2024-03-05T09:15:00Z",
-  },
-  {
-    id: "ph-4",
-    name: "Tropical Beach",
-    url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80",
-    thumbnailUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80",
-    mimeType: "image/jpeg",
-    width: 1200,
-    height: 800,
-    createdTime: "2024-03-20T16:45:00Z",
-  },
-  {
-    id: "ph-5",
-    name: "Cycling Through Mountains",
-    url: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=1200&q=80",
-    thumbnailUrl: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=400&q=80",
-    mimeType: "image/jpeg",
-    width: 1200,
-    height: 800,
-    createdTime: "2024-04-08T11:00:00Z",
-  },
-  {
-    id: "ph-6",
-    name: "Kayaking in Fjords",
-    url: "https://images.unsplash.com/photo-1472745942893-4b9f730c7668?w=1200&q=80",
-    thumbnailUrl: "https://images.unsplash.com/photo-1472745942893-4b9f730c7668?w=400&q=80",
-    mimeType: "image/jpeg",
-    width: 1200,
-    height: 800,
-    createdTime: "2024-04-22T08:30:00Z",
-  },
-  {
-    id: "ph-7",
-    name: "Desert Expedition",
-    url: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1200&q=80",
-    thumbnailUrl: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=400&q=80",
-    mimeType: "image/jpeg",
-    width: 1200,
-    height: 800,
-    createdTime: "2024-05-01T13:20:00Z",
-  },
-  {
-    id: "ph-8",
-    name: "Snowboarding Action",
-    url: "https://images.unsplash.com/photo-1551524559-8af4e6624178?w=1200&q=80",
-    thumbnailUrl: "https://images.unsplash.com/photo-1551524559-8af4e6624178?w=400&q=80",
-    mimeType: "image/jpeg",
-    width: 1200,
-    height: 800,
-    createdTime: "2024-05-15T07:45:00Z",
-  },
-  {
-    id: "ph-9",
-    name: "Patagonia Landscape",
-    url: "https://images.unsplash.com/photo-1531761535209-180857e963b9?w=1200&q=80",
-    thumbnailUrl: "https://images.unsplash.com/photo-1531761535209-180857e963b9?w=400&q=80",
-    mimeType: "image/jpeg",
-    width: 1200,
-    height: 800,
-    createdTime: "2024-06-02T15:10:00Z",
-  },
-  {
-    id: "ph-10",
-    name: "Basketball Game",
-    url: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1200&q=80",
-    thumbnailUrl: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&q=80",
-    mimeType: "image/jpeg",
-    width: 1200,
-    height: 800,
-    createdTime: "2024-06-18T19:00:00Z",
-  },
-  {
-    id: "ph-11",
-    name: "Northern Lights",
-    url: "https://images.unsplash.com/photo-1483347756197-71ef80e95f73?w=1200&q=80",
-    thumbnailUrl: "https://images.unsplash.com/photo-1483347756197-71ef80e95f73?w=400&q=80",
-    mimeType: "image/jpeg",
-    width: 1200,
-    height: 800,
-    createdTime: "2024-07-04T22:30:00Z",
-  },
-  {
-    id: "ph-12",
-    name: "Marathon Finish Line",
-    url: "https://images.unsplash.com/photo-1513593771513-7b58b6c4af38?w=1200&q=80",
-    thumbnailUrl: "https://images.unsplash.com/photo-1513593771513-7b58b6c4af38?w=400&q=80",
-    mimeType: "image/jpeg",
-    width: 1200,
-    height: 800,
-    createdTime: "2024-07-20T06:00:00Z",
-  },
-];
-
-function hasGoogleDriveCredentials(): boolean {
-  return !!process.env.GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY;
+export interface DriveImage {
+  id: string;
+  name: string;
+  url: string;
+  thumbnailUrl: string;
+  width: number;
+  height: number;
 }
 
-export function getFileUrl(fileId: string): string {
-  return `https://drive.google.com/uc?export=view&id=${fileId}`;
-}
+const API_KEY = process.env.GOOGLE_API_KEY;
 
-export async function listFilesInFolder(folderId: string): Promise<MediaItem[]> {
-  if (!hasGoogleDriveCredentials()) {
-    // Return placeholder data when no credentials are configured
-    console.log(`Google Drive credentials not configured. Returning placeholder data for folder: ${folderId}`);
-    return PLACEHOLDER_IMAGES;
+// Cache to avoid hitting API limits (refreshes every build or every 10 min in dev)
+const cache = new Map<string, { data: DriveImage[]; timestamp: number }>();
+const CACHE_TTL = 10 * 60 * 1000; // 10 minutes
+
+/**
+ * Fetch all images from a Google Drive folder.
+ * Files are sorted by name, so use number prefixes (01-, 02-) to control order.
+ */
+export async function getImagesFromFolder(folderId: string): Promise<DriveImage[]> {
+  if (!API_KEY || !folderId || folderId === "YOUR_FOLDER_ID") {
+    return [];
   }
 
-  // TODO: Implement actual Google Drive API integration
-  // Use GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY to authenticate
-  // List files in the specified folder using the Drive API v3
-  // Map results to MediaItem[]
+  // Check cache
+  const cached = cache.get(folderId);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.data;
+  }
 
   try {
-    // Placeholder for actual implementation
-    console.log(`Fetching files from Google Drive folder: ${folderId}`);
-    return PLACEHOLDER_IMAGES;
+    const query = encodeURIComponent(`'${folderId}' in parents and mimeType contains 'image/' and trashed = false`);
+    const fields = encodeURIComponent("files(id,name,mimeType,imageMediaMetadata)");
+    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&orderBy=name&pageSize=100&key=${API_KEY}`;
+
+    const res = await fetch(url, { next: { revalidate: 3600 } }); // revalidate every hour
+
+    if (!res.ok) {
+      console.error(`Google Drive API error for folder ${folderId}: ${res.status}`);
+      return [];
+    }
+
+    const data = await res.json();
+
+    if (!data.files || data.files.length === 0) {
+      return [];
+    }
+
+    const images: DriveImage[] = data.files.map((file: {
+      id: string;
+      name: string;
+      imageMediaMetadata?: { width?: number; height?: number };
+    }) => ({
+      id: file.id,
+      name: file.name,
+      // Google's CDN with dynamic resizing — w1920 for full size, w600 for thumbnails
+      url: `https://lh3.googleusercontent.com/d/${file.id}=w1920`,
+      thumbnailUrl: `https://lh3.googleusercontent.com/d/${file.id}=w600`,
+      width: file.imageMediaMetadata?.width || 1920,
+      height: file.imageMediaMetadata?.height || 1280,
+    }));
+
+    // Cache the result
+    cache.set(folderId, { data: images, timestamp: Date.now() });
+
+    return images;
   } catch (error) {
-    console.error("Error listing files from Google Drive:", error);
-    return PLACEHOLDER_IMAGES;
+    console.error(`Failed to fetch from Google Drive folder ${folderId}:`, error);
+    return [];
   }
+}
+
+/**
+ * Folder ID mapping for portfolio categories.
+ * These are read from environment variables set in .env.local
+ */
+export const DRIVE_FOLDERS = {
+  // Sport / Action
+  football: process.env.GOOGLE_DRIVE_SPORT_FOOTBALL || "",
+  "formula-1": process.env.GOOGLE_DRIVE_SPORT_F1 || "",
+  "formula-e": process.env.GOOGLE_DRIVE_SPORT_FE || "",
+  sportscars: process.env.GOOGLE_DRIVE_SPORT_SPORTSCARS || "",
+  "gb3-gb4": process.env.GOOGLE_DRIVE_SPORT_GB3GB4 || "",
+  // Travel / Adventure
+  travel: process.env.GOOGLE_DRIVE_TRAVEL_TRAVEL || "",
+  edits: process.env.GOOGLE_DRIVE_TRAVEL_EDITS || "",
+} as const;
+
+export type DriveCategory = keyof typeof DRIVE_FOLDERS;
+
+/**
+ * Fetch images for multiple categories and return them with category tags.
+ */
+export async function getPortfolioImages(
+  categories: DriveCategory[]
+): Promise<{ src: string; alt: string; category: string; width: number; height: number }[]> {
+  const results = await Promise.all(
+    categories.map(async (cat) => {
+      const folderId = DRIVE_FOLDERS[cat];
+      const images = await getImagesFromFolder(folderId);
+      return images.map((img) => ({
+        src: img.url,
+        alt: img.name.replace(/^\d+-/, "").replace(/[-_]/g, " ").replace(/\.\w+$/, ""),
+        category: cat,
+        width: img.width,
+        height: img.height,
+      }));
+    })
+  );
+
+  return results.flat();
 }

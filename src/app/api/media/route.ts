@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { listFilesInFolder } from "@/lib/google-drive";
+import { getImagesFromFolder } from "@/lib/google-drive";
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const folder = searchParams.get("folder") || "default";
+    const folder = searchParams.get("folder") || "";
 
-    const items = await listFilesInFolder(folder);
+    const items = await getImagesFromFolder(folder);
 
     return NextResponse.json({ items }, { status: 200 });
   } catch (error) {
