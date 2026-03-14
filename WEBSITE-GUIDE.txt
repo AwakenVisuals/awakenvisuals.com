@@ -1,412 +1,1275 @@
 ================================================================================
-AWAKEN VISUALS WEBSITE — HOW TO EDIT GUIDE
-================================================================================
-Last updated: March 2026
-Tech: Next.js + React + TypeScript + Tailwind CSS
-Hosted: Netlify (auto-deploys from GitHub)
-
-TABLE OF CONTENTS
------------------
-1. How Deployment Works
-2. How to Make Changes
-3. Adding/Changing Photos
-4. Editing the Homepage
-5. Editing the Navbar / Menu
-6. Editing the Footer
-7. Editing the Action (Sport) Portfolio
-8. Editing the Adventure (Travel) Portfolio
-9. Editing the About Page
-10. Editing the Contact Page
-11. Editing the Blog (AV Club)
-12. Changing Colours
-13. SEO
-14. Troubleshooting
-
-================================================================================
-1. HOW DEPLOYMENT WORKS
+  AWAKEN VISUALS WEBSITE - MAINTENANCE GUIDE FOR NICK
 ================================================================================
 
-Your site auto-deploys when you push to GitHub:
-  - Edit files locally
-  - Commit changes: git add . && git commit -m "your message"
-  - Push: git push
-  - Netlify builds and deploys automatically (takes ~1-2 mins)
+  This guide tells you exactly how to edit every part of your website
+  without needing a developer or AI. Keep this file handy.
 
-To run locally for testing:
-  cd ~/awakenvisuals.com
-  pnpm dev
-  # Then open http://localhost:3000 in your browser
+  Your site is built with Next.js (a React framework).
+  You edit code files in a text editor (VS Code is recommended), then push
+  changes to GitHub, which auto-deploys them.
 
-================================================================================
-2. HOW TO MAKE CHANGES
-================================================================================
+  Your package.json uses "npm" commands (not pnpm). Use npm for everything.
 
-All website code lives in: ~/awakenvisuals.com/src/
-All images live in: ~/awakenvisuals.com/public/
-
-File types:
-  .tsx = Page/component code (HTML + JavaScript)
-  .css = Styles
-  .ts  = Logic/utility code
-
-The key folders:
-  src/app/           = Pages (each folder = a URL route)
-  src/components/    = Reusable building blocks
-  public/            = Images, fonts, static files
-
-To edit text: Open the .tsx file, find the text in quotes, change it, save.
-To edit images: Drop new image in public/ folder, update the path in the code.
 
 ================================================================================
-3. ADDING/CHANGING PHOTOS
+  TABLE OF CONTENTS
 ================================================================================
 
-IMAGE LOCATIONS:
-  /public/gallery/          = Hero background images (hero-1.jpg to hero-10.jpg)
-  /public/portfolio/sport/  = Action/sport portfolio images
-  /public/portfolio/travel/ = Adventure/travel portfolio images
-  /public/about/            = About page images (nick.jpg, testimonial photos)
+  1.  QUICK START - Running the site locally
+  2.  FILE STRUCTURE - What each file does
+  3.  HOW TO CHANGE TEXT/COPY - Every section, exact files and lines
+  4.  HOW TO CHANGE COLORS - The color system
+  5.  HOW TO ADD/REMOVE PORTFOLIO FILTER CATEGORIES
+  6.  HOW TO ADD PORTFOLIO IMAGES
+  7.  HOW TO REPLACE THE ABOUT PAGE PHOTOS
+  8.  HOW TO UPDATE SOCIAL MEDIA LINKS
+  9.  HOW TO UPDATE CONTACT INFO
+  10. HOW TO DEPLOY CHANGES
+  11. SUBSTACK BLOG INTEGRATION
+  12. ADDING A NEW PAGE
+  13. TROUBLESHOOTING
 
-TO ADD A NEW HERO IMAGE:
-  1. Drop your image in /public/gallery/ (e.g., hero-11.jpg)
-  2. Open src/components/home/hero.tsx
-  3. Find the galleryImages array (near line 17)
-  4. Add your image path:
-     "/gallery/hero-11.jpg",
-
-TO REPLACE THE ABOUT PAGE PHOTO:
-  1. Put your photo at /public/about/nick.jpg (replace the existing one)
-  2. No code changes needed!
-
-TO REPLACE TESTIMONIAL PHOTOS:
-  1. Put photos at /public/about/paul-fullick.jpg and /public/about/andy-tucker.jpg
-  2. No code changes needed!
 
 ================================================================================
-4. EDITING THE HOMEPAGE
+  1. QUICK START
 ================================================================================
 
-FILE: src/components/home/hero.tsx
+  PREREQUISITES:
+  - Node.js installed (download from https://nodejs.org, pick the LTS version)
+  - A code editor (VS Code: https://code.visualstudio.com)
+  - Git installed (usually comes with macOS)
 
-HERO TAGLINE (the big text on the hero):
-  Find this line:
-    "Bringing a human touch to your stories"
-  Change the text inside the quotes.
+  FIRST TIME SETUP:
+  Open Terminal, then run:
 
-HERO BUTTONS:
-  Find the <Link> tags with "Action" and "Adventure" text.
-  Change the label text or href (URL) as needed.
+    cd ~/awakenvisuals.com
+    npm install
 
-HERO BACKGROUND IMAGES:
-  Find the galleryImages array at the top of the file.
-  Add/remove image paths. Images must be in /public/gallery/
+  START THE DEV SERVER (to preview changes locally):
 
----
+    cd ~/awakenvisuals.com
+    npm run dev
 
-FILE: src/components/home/contact-cta.tsx
+  Then open your browser to:  http://localhost:3000
+  Every time you save a file, the browser will auto-refresh.
+  Press Ctrl+C in Terminal to stop the server.
 
-CTA HEADING:
-  Find: "Let's Create Something Together"
-  Change to whatever you want.
+  BUILD FOR PRODUCTION (to test the production build):
 
-CTA DESCRIPTION:
-  Find the <p> tag below the heading with the longer text.
-  Edit the text inside.
+    npm run build
 
-CTA BUTTON:
-  Find: "I want to create something cool"
-  Change the text.
+  If this command finishes without errors, your site is ready to deploy.
 
----
+  DEPLOY (push to live site):
+  See Section 10 below.
 
-FILE: src/components/home/blog-preview.tsx
-
-This shows the latest 3 blog posts on the homepage.
-Section title "AV Club" can be found in the <h2> tag.
 
 ================================================================================
-5. EDITING THE NAVBAR / MENU
+  2. FILE STRUCTURE - What Each Important File Does
 ================================================================================
 
-FILE: src/components/layout/navbar.tsx
+  src/
+    app/
+      layout.tsx ............... The main wrapper for EVERY page. Contains the
+                                 site title/SEO metadata, the Navbar, and Footer.
+      page.tsx ................. The HOME PAGE. Loads Hero, BlogPreview, ContactCTA.
+      globals.css .............. All the COLOR VARIABLES for the site.
+      about/page.tsx ........... The ABOUT page (your bio, stats, testimonials).
+      contact/page.tsx ......... The CONTACT page (form, email, WhatsApp, socials).
+      blog/page.tsx ............ The BLOG listing page (AV Club).
+      blog/[slug]/page.tsx ..... Individual blog post pages.
+      portfolio/
+        sport/sport-portfolio.tsx ... ACTION portfolio (filters + images).
+        travel/travel-portfolio.tsx . ADVENTURE portfolio (filters + images).
+    components/
+      home/
+        hero.tsx ............... Homepage hero section (big headline + gallery).
+        contact-cta.tsx ........ Homepage "Let's Create Something" call-to-action.
+        blog-preview.tsx ....... Homepage blog preview cards.
+      layout/
+        navbar.tsx ............. The navigation bar (top of every page).
+        footer.tsx ............. The footer (bottom of every page).
+    lib/
+      substack.ts .............. Fetches blog posts from your Substack RSS feed.
+    types/
+      index.ts ................. Type definitions (BlogPost, etc.). Rarely edited.
 
-NAV LINKS (what appears in the menu):
-  Find the navLinks array near the top:
-    const navLinks = [
-      { href: "/portfolio/sport", label: "Action" },
-      { href: "/portfolio/travel", label: "Adventure" },
-      { href: "/about", label: "About" },
-      { href: "/contact", label: "Contact" },
+  public/
+    gallery/ ................... Hero gallery images (hero-1.jpg through hero-10.jpg).
+    about/ ..................... About page photos (nick.jpg, paul-fullick.jpg, etc).
+    portfolio/sport/ ........... Sport portfolio images.
+    portfolio/travel/ .......... Travel portfolio images.
+
+
+================================================================================
+  3. HOW TO CHANGE TEXT/COPY
+================================================================================
+
+  Below is EVERY piece of editable text on the site, with the exact file,
+  the surrounding code so you can find it, and markers showing what to change.
+
+  IMPORTANT RULES FOR EDITING TEXT:
+  - Always keep quotes around text: "your text here"
+  - For apostrophes inside HTML tags (not in arrays), use &apos;
+    Example: Let&apos;s  displays as  Let's
+  - For ampersands, use &amp;
+    Example: GB3 &amp; GB4  displays as  GB3 & GB4
+  - If text is inside {"..."} with curly braces, you can use normal apostrophes.
+    Example: {"Hey! I'm Nick"}
+  - Never delete the < > tags or className="..." parts -- only change the
+    text between them.
+
+
+  ---- HOMEPAGE HERO HEADLINE ----
+  File: src/components/home/hero.tsx
+
+    <h1 className="text-4xl font-light italic leading-tight tracking-wide text-white sm:text-5xl md:text-6xl lg:text-7xl">
+      >>> CHANGE THIS TEXT <<<  Bringing a human touch
+      <br />
+      >>> CHANGE THIS TEXT <<<  to your stories
+    </h1>
+
+  Note: The <br /> creates a line break. Remove it for one line, or move it
+  to break the text differently.
+
+
+  ---- HOMEPAGE HERO BUTTONS ----
+  File: src/components/home/hero.tsx
+
+    First button (around line 87):
+      >>> CHANGE THIS TEXT <<<  Action
+
+    Second button (around line 93):
+      >>> CHANGE THIS TEXT <<<  Adventure
+
+  To change where these buttons link, edit the "href" values:
+    href="/portfolio/sport"    <-- change this path for the Action button
+    href="/portfolio/travel"   <-- change this path for the Adventure button
+
+
+  ---- HOMEPAGE HERO GALLERY IMAGES ----
+  File: src/components/home/hero.tsx
+
+  The rotating background images are listed at the top (lines 16-27):
+
+    const galleryImages = [
+      "/gallery/hero-1.jpg",
+      "/gallery/hero-2.jpg",
+      "/gallery/hero-3.jpg",
+      "/gallery/hero-4.jpg",
+      "/gallery/hero-5.jpg",
+      "/gallery/hero-6.jpg",
+      "/gallery/hero-7.jpg",
+      "/gallery/hero-8.jpg",
+      "/gallery/hero-9.jpg",
+      "/gallery/hero-10.jpg",
     ];
 
-  To add a link: Add a new { href: "/your-page", label: "Label" }
-  To remove: Delete the line
-  To rename: Change the "label" text
+  To add more: Add a new line like "/gallery/hero-11.jpg", and put the
+  actual image file in public/gallery/hero-11.jpg.
+  To remove one: Delete the line.
 
-SOCIAL MEDIA LINKS:
-  Find the socialLinks array. Each has:
-    { href: "URL", icon: IconName, label: "Name" }
 
-  Add/remove/edit as needed.
+  ---- HOMEPAGE BLOG PREVIEW SECTION ----
+  File: src/components/home/blog-preview.tsx
 
-LOGO TEXT:
-  Find "Awaken" and "Visuals" in the <span> tags.
+  Section heading (line 53):
+    <h2 className="text-3xl font-light tracking-[0.1em] text-[#000000] md:text-4xl">
+      >>> CHANGE THIS TEXT <<<  AV Club
+    </h2>
+
+  Placeholder blog posts (lines 8-36) -- these show on the homepage always
+  (they are hardcoded, NOT pulled from Substack):
+
+    const placeholderPosts = [
+      {
+        title: ">>> CHANGE THIS TEXT <<<  Behind the Lens: Champions League Final",
+        excerpt: ">>> CHANGE THIS TEXT <<<  An intimate look at capturing the biggest moments...",
+        image: ">>> CHANGE THIS URL <<<  https://images.unsplash.com/photo-...",
+        date: ">>> CHANGE THIS TEXT <<<  March 2026",
+        slug: "champions-league-final",
+      },
+      {
+        title: ">>> CHANGE THIS TEXT <<<  Iceland: Fire and Ice",
+        excerpt: ">>> CHANGE THIS TEXT <<<  Exploring the dramatic landscapes of Iceland...",
+        image: ">>> CHANGE THIS URL <<<  https://images.unsplash.com/photo-...",
+        date: ">>> CHANGE THIS TEXT <<<  February 2026",
+        slug: "iceland-fire-and-ice",
+      },
+      {
+        title: ">>> CHANGE THIS TEXT <<<  The Art of Motion: Capturing Speed",
+        excerpt: ">>> CHANGE THIS TEXT <<<  Technical insights into photographing fast-moving...",
+        image: ">>> CHANGE THIS URL <<<  https://images.unsplash.com/photo-...",
+        date: ">>> CHANGE THIS TEXT <<<  January 2026",
+        slug: "art-of-motion",
+      },
+    ];
+
+  You can replace the Unsplash image URLs with your own images. To use a
+  local image, put it in public/ and use a path like "/gallery/my-photo.jpg".
+
+  "View All Posts" link text (line 111):
+      >>> CHANGE THIS TEXT <<<  View All Posts
+
+
+  ---- HOMEPAGE CONTACT CTA SECTION ----
+  File: src/components/home/contact-cta.tsx
+
+  Heading (line 20):
+    <h2 ...>
+      >>> CHANGE THIS TEXT <<<  Let&apos;s Create Something Together
+    </h2>
+
+  Description (lines 22-24):
+    <p ...>
+      >>> CHANGE THIS TEXT <<<  Whether it&apos;s the raw energy of the game
+      or the quiet magic of a new horizon, Awaken Visuals is here to capture
+      the pulse of it. Got a story to tell, a sport to cover, or a journey
+      to document?
+    </p>
+
+  Button text (line 30):
+      >>> CHANGE THIS TEXT <<<  I want to create something cool
+
+
+  ---- NAVBAR ----
+  File: src/components/layout/navbar.tsx
+
+  Logo text (lines 59 and 66):
+    >>> CHANGE THIS TEXT <<<  Awaken    (the bold part)
+    >>> CHANGE THIS TEXT <<<  Visuals   (the light part)
+
+  Note: The logo also appears in the MOBILE MENU at lines 129 and 132.
+  If you change the logo text, change it in both places.
+
+  Navigation link labels (lines 8-13):
+    const navLinks = [
+      { href: "/portfolio/sport", label: ">>> CHANGE THIS TEXT <<<  Action" },
+      { href: "/portfolio/travel", label: ">>> CHANGE THIS TEXT <<<  Adventure" },
+      { href: "/about", label: ">>> CHANGE THIS TEXT <<<  About" },
+      { href: "/contact", label: ">>> CHANGE THIS TEXT <<<  Contact" },
+    ];
+
+  To add a nav link, add a new line to the array:
+    { href: "/services", label: "Services" },
+
+  To remove a nav link, delete its line.
+
+
+  ---- FOOTER ----
+  File: src/components/layout/footer.tsx
+
+  Logo text (lines 37 and 40):
+    >>> CHANGE THIS TEXT <<<  Awaken
+    >>> CHANGE THIS TEXT <<<  Visuals
+
+  Tagline (line 44):
+    <p className="mt-3 text-sm text-white/40 tracking-wide">
+      >>> CHANGE THIS TEXT <<<  Capturing moments that matter
+    </p>
+
+  Footer navigation labels (lines 20-26):
+    const footerLinks = [
+      { href: "/portfolio/sport", label: ">>> CHANGE THIS TEXT <<<  Action" },
+      { href: "/portfolio/travel", label: ">>> CHANGE THIS TEXT <<<  Adventure" },
+      { href: "/blog", label: ">>> CHANGE THIS TEXT <<<  AV Club" },
+      { href: "/about", label: ">>> CHANGE THIS TEXT <<<  About" },
+      { href: "/contact", label: ">>> CHANGE THIS TEXT <<<  Contact" },
+    ];
+
+  Copyright text (line 81):
+    The year auto-updates. The text "Awaken Visuals. All rights reserved."
+    can be changed on that line.
+
+
+  ---- ABOUT PAGE ----
+  File: src/app/about/page.tsx
+
+  Page heading (line 47-48):
+    <h1 ...>
+      >>> CHANGE THIS TEXT <<<  {"Hey! I'm Nick"}
+    </h1>
+
+  Note: The {"..."} syntax with curly braces and quotes is needed here because
+  the text contains an apostrophe. Keep that format.
+
+  Subheading (line 50):
+    <p ...>
+      >>> CHANGE THIS TEXT <<<  The creative behind Awaken Visuals.
+    </p>
+
+  "About Me" label (line 87):
+      >>> CHANGE THIS TEXT <<<  About Me
+
+  Section title (line 90):
+      >>> CHANGE THIS TEXT <<<  Creative Professional &amp; Brand Partner
+
+  Note: &amp; displays as "&". Always use &amp; for ampersands in HTML tags.
+
+  Bio paragraphs (lines 93-108):
+    First paragraph (line 94):
+      >>> CHANGE THIS TEXT <<<  "I've had the privilege of collaborating with
+      major brands including Formula 1 and Unilad, and those experiences
+      shaped how I approach every project today."
+
+    Second paragraph (lines 98-102):
+      >>> CHANGE THIS TEXT <<<  I established Awaken Visuals as an independent
+      creative business so I could partner with brands I genuinely support.
+      My mission is simple: produce high-quality, visually compelling content
+      that also achieves measurable business objectives.
+
+    Third paragraph (lines 104-108):
+      >>> CHANGE THIS TEXT <<<  Working with me means access to a distinctive
+      creative perspective combined with a real commitment to producing the
+      optimal content for your brand storytelling and audience engagement.
+
+  Stats section (lines 126-162):
+    Stat 1 -- Views count (line 128):
+      >>> CHANGE THIS TEXT <<<  150M+
+    Stat 1 -- Label (line 130):
+      >>> CHANGE THIS TEXT <<<  Views Across Platforms
+
+    Stat 2 -- Number (line 142):
+      >>> CHANGE THIS TEXT <<<  4
+    Stat 2 -- Label (line 145):
+      >>> CHANGE THIS TEXT <<<  Major Platforms
+
+    Stat 3 -- Platform names (line 157):
+      >>> CHANGE THIS TEXT <<<  Instagram, TikTok, Facebook &amp; YouTube
+    Stat 3 -- Label (line 160):
+      >>> CHANGE THIS TEXT <<<  Reach
+
+  Testimonials (lines 9-24):
+
+    const testimonials = [
+      {
+        quote: ">>> CHANGE THIS TEXT <<<  His creative ability to capture the mood of the moment and convert this into a social media context is spot on. We always got great results...",
+        name: ">>> CHANGE THIS TEXT <<<  Paul Fullick",
+        role: ">>> CHANGE THIS TEXT <<<  Driver",
+        image: "/about/paul-fullick.jpg",
+      },
+      {
+        quote: ">>> CHANGE THIS TEXT <<<  He's always professional, friendly and highly approachable with new ideas and top quality content...",
+        name: ">>> CHANGE THIS TEXT <<<  Andy Tucker",
+        role: ">>> CHANGE THIS TEXT <<<  Driver",
+        image: "/about/andy-tucker.jpg",
+      },
+    ];
+
+  TO ADD A NEW TESTIMONIAL:
+  Copy one of the blocks above and paste it after the last closing },
+  but before the ];  Make sure there is a comma after the previous entry.
+  Example -- adding a third testimonial:
+
+    const testimonials = [
+      { ... existing first testimonial ... },
+      { ... existing second testimonial ... },
+      {
+        quote: "Nick did amazing work for our brand...",
+        name: "Jane Smith",
+        role: "Marketing Director",
+        image: "/about/jane-smith.jpg",
+      },
+    ];
+
+  Then put jane-smith.jpg in public/about/.
+
+  Section titles for testimonials (lines 177 and 180):
+    >>> CHANGE THIS TEXT <<<  Kind Words
+    >>> CHANGE THIS TEXT <<<  What People Say
+
+  Bottom CTA heading (line 230):
+    >>> CHANGE THIS TEXT <<<  Beyond the Finish Line and Off the Beaten Path.
+    Above All, Human.
+
+  Bottom CTA button labels (lines 237 and 243):
+    >>> CHANGE THIS TEXT <<<  Get in Touch
+    >>> CHANGE THIS TEXT <<<  View Portfolio
+
+
+  ---- CONTACT PAGE ----
+  File: src/app/contact/page.tsx
+
+  Page heading (line 77):
+    <h1 ...>
+      >>> CHANGE THIS TEXT <<<  Contact
+    </h1>
+
+  Page description (lines 79-82):
+    <p ...>
+      >>> CHANGE THIS TEXT <<<  Have a story to tell, a project to bring to
+      life, or just want to say hey? I&apos;d love to hear from you.
+      Let&apos;s chat about what we can create together.
+    </p>
+
+  "Get in Touch" subheading (line 99):
+      >>> CHANGE THIS TEXT <<<  Get in Touch
+
+  Contact button labels (lines 16 and 21):
+    {
+      icon: Mail,
+      label: ">>> CHANGE THIS TEXT <<<  Email Me",
+      href: "mailto:nick@awakenvisuals.com",
+    },
+    {
+      icon: MessageCircle,
+      label: ">>> CHANGE THIS TEXT <<<  WhatsApp Me",
+      href: "https://wa.me/447734803759",
+    },
+
+  "Follow Along" label (line 124):
+      >>> CHANGE THIS TEXT <<<  Follow Along
+
+  Social link display text (lines 27-30):
+    { ... label: "Instagram", value: ">>> CHANGE THIS TEXT <<<  @awakenvisuals", ... },
+    { ... label: "TikTok", value: ">>> CHANGE THIS TEXT <<<  @awakenvisuals", ... },
+    { ... label: "YouTube", value: ">>> CHANGE THIS TEXT <<<  @awakenvisuals", ... },
+    { ... label: "Substack", value: ">>> CHANGE THIS TEXT <<<  AV Club", ... },
+
+  Form field labels and placeholders:
+    Name label (line 177):       >>> CHANGE THIS TEXT <<<  Name
+    Name placeholder (line 186): >>> CHANGE THIS TEXT <<<  Your name
+    Email label (line 191):      >>> CHANGE THIS TEXT <<<  Email
+    Email placeholder (line 200):>>> CHANGE THIS TEXT <<<  your@email.com
+    Subject label (line 205):    >>> CHANGE THIS TEXT <<<  Subject
+    Subject placeholder (214):   >>> CHANGE THIS TEXT <<<  What's this about?
+    Message label (line 219):    >>> CHANGE THIS TEXT <<<  Message
+    Message placeholder (228):   >>> CHANGE THIS TEXT <<<  Tell me about your project...
+
+  Submit button (line 237):
+    >>> CHANGE THIS TEXT <<<  Send
+
+  Success message after form submission (lines 158-162):
+    >>> CHANGE THIS TEXT <<<  Thanks for reaching out!
+    >>> CHANGE THIS TEXT <<<  I&apos;ll be in touch asap! Nick
+
+
+  ---- ACTION PORTFOLIO PAGE ----
+  File: src/app/portfolio/sport/sport-portfolio.tsx
+
+  "Portfolio" label (line 86):
+    >>> CHANGE THIS TEXT <<<  Portfolio
+
+  Page title (line 89):
+    <h1 ...>
+      >>> CHANGE THIS TEXT <<<  Action
+    </h1>
+
+  Subtitle (line 92):
+    <p ...>
+      >>> CHANGE THIS TEXT <<<  Sports Photography by Nick Emmerson
+    </p>
+
+  "No images" message (line 149):
+    >>> CHANGE THIS TEXT <<<  No images in this category yet.
+
+
+  ---- ADVENTURE PORTFOLIO PAGE ----
+  File: src/app/portfolio/travel/travel-portfolio.tsx
+
+  "Portfolio" label (line 76):
+    >>> CHANGE THIS TEXT <<<  Portfolio
+
+  Page title (line 79):
+    <h1 ...>
+      >>> CHANGE THIS TEXT <<<  Adventure
+    </h1>
+
+  Subtitle (line 82):
+    <p ...>
+      >>> CHANGE THIS TEXT <<<  Travel Photography and Edits by Nick Emmerson
+    </p>
+
+  "No images" message (line 139):
+    >>> CHANGE THIS TEXT <<<  No images in this category yet.
+
+
+  ---- BLOG PAGE (AV CLUB) ----
+  File: src/app/blog/page.tsx
+
+  The subtitle text (lines 99 and 113):
+    >>> CHANGE THIS TEXT <<<  Stories & Behind the Scenes
+
+  The heading (lines 102 and 116):
+    >>> CHANGE THIS TEXT <<<  AV Club
+
+  SEO metadata (lines 8-9):
+    title: ">>> CHANGE THIS TEXT <<<  AV Club",
+    description: ">>> CHANGE THIS TEXT <<<  Stories, behind-the-scenes and insights...",
+
+
+  ---- BLOG POST PAGE ----
+  File: src/app/blog/[slug]/page.tsx
+
+  "AV Club" label (line 66):
+    >>> CHANGE THIS TEXT <<<  AV Club
+
+  "Back to AV Club" link (lines 44 and 143):
+    >>> CHANGE THIS TEXT <<<  Back to AV Club
+
+  "Post Not Found" heading (line 34):
+    >>> CHANGE THIS TEXT <<<  Post Not Found
+
+  "Read on Substack" link (line 125):
+    >>> CHANGE THIS TEXT <<<  Read on Substack
+
+
+  ---- SITE-WIDE SEO METADATA ----
+  File: src/app/layout.tsx
+
+  Site title (line 15):
+    default: ">>> CHANGE THIS TEXT <<<  Awaken Visuals | Sport & Travel Photography by Nick Emmerson",
+
+  Template for per-page titles (line 16):
+    template: ">>> CHANGE THIS TEXT <<<  %s | Awaken Visuals",
+    (The %s gets replaced with each page's own title)
+
+  Site description (line 18):
+    description: ">>> CHANGE THIS TEXT <<<  Award-winning sport and travel photography..."
+
+  Keywords (line 20):
+    keywords: [">>> CHANGE THESE <<<  sport photography", "travel photography", ...]
+
+  OpenGraph title (line 28):
+    title: ">>> CHANGE THIS TEXT <<<  Awaken Visuals | Sport & Travel Photography...",
+
+  OpenGraph description (line 29):
+    description: ">>> CHANGE THIS TEXT <<<  Capturing the raw energy of sport...",
+
 
 ================================================================================
-6. EDITING THE FOOTER
+  4. HOW TO CHANGE COLORS
 ================================================================================
 
-FILE: src/components/layout/footer.tsx
+  Your site uses 3 main brand colors. They appear as hex codes throughout
+  the code:
 
-FOOTER LINKS:
-  Find the footerLinks array:
-    const footerLinks = [...]
-  Add/remove/edit like navbar links.
+    #043565  --  Dark Navy Blue (primary brand color: backgrounds, headings,
+                 buttons)
+    #F5A300  --  Gold/Amber (accent color: highlights, hover states,
+                 decorative elements)
+    #D4E2ED  --  Light Blue-Grey (borders, subtle backgrounds)
+    #000000  --  Black (body text, often with /60 or /70 after it for opacity)
+    #FFFFFF  --  White
 
-SOCIAL LINKS:
-  Find the socialLinks array in this file.
-  Same format as navbar social links.
+  TO CHANGE A COLOR ACROSS THE ENTIRE SITE:
 
-TAGLINE:
-  Find: "Capturing moments that matter"
-  Change the text.
+  Method 1 -- Find and Replace (recommended):
+    In VS Code, press Cmd+Shift+H (Find and Replace in Files).
+    Search for the old color (e.g., #F5A300) and replace with your new color.
+    This will update it everywhere at once.
+
+    IMPORTANT: Only search within the src/ folder to avoid changing node_modules.
+    In the "files to include" field, type: src/**
+
+  Method 2 -- CSS Variables:
+  File: src/app/globals.css
+
+  The :root section (starting line 51) defines CSS variables. The key ones:
+
+    --primary: #043565;          <-- Navy blue
+    --accent: #F5A300;           <-- Gold/amber
+    --secondary: #D4E2ED;        <-- Light blue-grey
+    --background: #FFFFFF;       <-- Page background
+    --foreground: #000000;       <-- Text color
+
+  However, most of the site uses the hex codes directly in class names
+  (like bg-[#043565] or text-[#F5A300]), NOT the CSS variables. So
+  Method 1 (Find and Replace) is the most reliable way to change colors.
+
+  COLOR FORMAT:
+  Colors are always 6-character hex codes starting with #.
+  They are case-sensitive: #F5A300 is NOT the same as #f5a300.
+  Use the exact case shown above when searching.
+
+  HOW OPACITY WORKS:
+  You will see things like text-white/60 or bg-[#000000]/70.
+  The number after the / is the opacity percentage.
+  /60 means 60% opacity (semi-transparent), /100 means fully solid.
+  You can change these numbers to make things more or less transparent.
+
 
 ================================================================================
-7. EDITING THE ACTION (SPORT) PORTFOLIO
+  5. HOW TO ADD/REMOVE PORTFOLIO FILTER CATEGORIES
 ================================================================================
 
-FILE: src/app/portfolio/sport/sport-portfolio.tsx
+  ---- ACTION PORTFOLIO (Sport) ----
+  File: src/app/portfolio/sport/sport-portfolio.tsx
 
-ADDING/REMOVING FILTER CATEGORIES:
-  Find the filters array near the top (clearly marked with comments):
+  The filter tabs are defined in the "filters" array (lines 17-24):
 
     const filters = [
       { id: "all", label: "All" },
       { id: "football", label: "Football" },
       { id: "formula-1", label: "Formula 1" },
-      ...
+      { id: "formula-e", label: "Formula E" },
+      { id: "sportscars", label: "Sportscars" },
+      { id: "gb3-gb4", label: "GB3 & GB4" },
     ];
 
-  TO ADD A NEW CATEGORY (e.g., Rugby):
-    1. Add to filters: { id: "rugby", label: "Rugby" },
-    2. Add images below with category: "rugby" (see next section)
+  TO ADD A NEW CATEGORY (e.g., "Rugby"):
+
+    Step 1: Add a new line BEFORE the closing ];
+
+      const filters = [
+        { id: "all", label: "All" },
+        { id: "football", label: "Football" },
+        { id: "formula-1", label: "Formula 1" },
+        { id: "formula-e", label: "Formula E" },
+        { id: "sportscars", label: "Sportscars" },
+        { id: "gb3-gb4", label: "GB3 & GB4" },
+        { id: "rugby", label: "Rugby" },           <-- NEW LINE
+      ];
+
+    The "id" must be lowercase with hyphens instead of spaces.
+    The "label" is what users see on the filter button.
+
+    Step 2: Add images for that category in the portfolioImages array
+    (see Section 6).
 
   TO REMOVE A CATEGORY:
-    1. Delete its line from filters
-    2. Delete its images from portfolioImages
+    Delete the entire line for that category. For example, to remove
+    Formula E, delete this line:
+      { id: "formula-e", label: "Formula E" },
 
-ADDING/REMOVING IMAGES:
-  Find the portfolioImages array (clearly marked with comments):
+    Also remove any images in the portfolioImages array that have
+    category: "formula-e", or they will just never be shown.
 
-    const portfolioImages = [
-      { src: "/portfolio/sport/my-photo.jpg", alt: "Description", category: "football", aspect: "landscape" },
+  TO RENAME A CATEGORY:
+    Change the "label" value. For example:
+      { id: "formula-1", label: "F1" },
+
+    If you also change the "id", you MUST update all images in
+    portfolioImages that used the old id to use the new one.
+
+
+  ---- ADVENTURE PORTFOLIO (Travel) ----
+  File: src/app/portfolio/travel/travel-portfolio.tsx
+
+  The filter tabs (lines 17-21):
+
+    const filters = [
+      { id: "all", label: "All" },
+      { id: "travel", label: "Travel" },
+      { id: "edits", label: "Edits" },
+    ];
+
+  Same process as above. To add "Landscapes":
+
+    const filters = [
+      { id: "all", label: "All" },
+      { id: "travel", label: "Travel" },
+      { id: "edits", label: "Edits" },
+      { id: "landscapes", label: "Landscapes" },    <-- NEW LINE
+    ];
+
+  Then add images with category: "landscapes" to the portfolioImages array.
+
+
+================================================================================
+  6. HOW TO ADD PORTFOLIO IMAGES
+================================================================================
+
+  Step 1: Add your image file to the correct folder
+  - For Action/sport images: put them in  public/portfolio/sport/
+  - For Adventure/travel images: put them in  public/portfolio/travel/
+  - Use descriptive filenames like "f1-silverstone-2025.jpg"
+  - Recommended: JPEG format, around 1500-2000px on the longest side
+  - Keep file sizes under 500KB if possible (compress at tinypng.com)
+
+  Step 2: Add the image to the code array
+
+  ---- ACTION PORTFOLIO ----
+  File: src/app/portfolio/sport/sport-portfolio.tsx
+
+  Find the portfolioImages array (starts around line 47). Here is the
+  current content:
+
+    const portfolioImages: PortfolioImage[] = [
+      // Football
+      { src: "/gallery/hero-1.jpg", alt: "Football action shot", category: "football", aspect: "landscape" },
+      { src: "/gallery/hero-5.jpg", alt: "Football match coverage", category: "football", aspect: "portrait" },
+      // Formula 1
+      { src: "/gallery/hero-2.jpg", alt: "Formula 1 racing", category: "formula-1", aspect: "landscape" },
+      { src: "/gallery/hero-6.jpg", alt: "F1 paddock", category: "formula-1", aspect: "portrait" },
+      // Formula E
+      { src: "/gallery/hero-3.jpg", alt: "Formula E racing", category: "formula-e", aspect: "landscape" },
+      { src: "/gallery/hero-7.jpg", alt: "Formula E event", category: "formula-e", aspect: "landscape" },
+      // Sportscars
+      { src: "/gallery/hero-4.jpg", alt: "Sportscar racing", category: "sportscars", aspect: "landscape" },
+      { src: "/gallery/hero-8.jpg", alt: "GT racing", category: "sportscars", aspect: "portrait" },
+      // GB3 & GB4
+      { src: "/gallery/hero-9.jpg", alt: "GB3 racing", category: "gb3-gb4", aspect: "landscape" },
+      { src: "/gallery/hero-10.jpg", alt: "GB4 racing", category: "gb3-gb4", aspect: "landscape" },
+    ];
+
+  TO ADD A NEW IMAGE, add a line like this:
+
+    { src: "/portfolio/sport/your-photo.jpg", alt: "Description", category: "football", aspect: "landscape" },
+
+  Breaking down each field:
+    src:      Path to your image starting with /. It is relative to the
+              public/ folder. So if your file is at:
+                public/portfolio/sport/cool-shot.jpg
+              then src should be:
+                "/portfolio/sport/cool-shot.jpg"
+
+    alt:      A short description of the image (for accessibility and SEO).
+
+    category: Must EXACTLY match one of the filter "id" values:
+              "football", "formula-1", "formula-e", "sportscars", "gb3-gb4"
+              (or whatever you have defined in the filters array).
+
+    aspect:   Either "landscape" (wider than tall, 4:3 ratio on screen)
+              or "portrait" (taller than wide, 3:4 ratio on screen).
+              Pick whichever matches your photo's orientation.
+
+
+  ---- ADVENTURE PORTFOLIO ----
+  File: src/app/portfolio/travel/travel-portfolio.tsx
+
+  Same process. The portfolioImages array starts around line 44:
+
+    const portfolioImages: PortfolioImage[] = [
+      // Travel
+      { src: "/gallery/hero-3.jpg", alt: "Travel photography", category: "travel", aspect: "landscape" },
+      { src: "/gallery/hero-7.jpg", alt: "Landscape photography", category: "travel", aspect: "portrait" },
+      { src: "/gallery/hero-9.jpg", alt: "Adventure destination", category: "travel", aspect: "landscape" },
+      // Edits
+      { src: "/gallery/hero-4.jpg", alt: "Creative edit", category: "edits", aspect: "landscape" },
+      { src: "/gallery/hero-8.jpg", alt: "Photo edit", category: "edits", aspect: "portrait" },
+      { src: "/gallery/hero-10.jpg", alt: "Visual edit", category: "edits", aspect: "landscape" },
+    ];
+
+  Add a new image:
+    { src: "/portfolio/travel/norway-fjord.jpg", alt: "Norwegian fjord at sunset", category: "travel", aspect: "landscape" },
+
+  TO REMOVE AN IMAGE:
+  Delete the entire line for that image from the array.
+
+  TO REORDER IMAGES:
+  Cut and paste lines to change the order. Images display in the order
+  they appear in the array.
+
+  ADDING COMMENTS:
+  You can add // comments to organize images by category:
+    // Rugby
+    { src: "/portfolio/sport/rugby-try.jpg", alt: "Try scored", category: "rugby", aspect: "landscape" },
+
+
+================================================================================
+  7. HOW TO REPLACE THE ABOUT PAGE PHOTOS
+================================================================================
+
+  All About page photos go in:  public/about/
+
+  ---- YOUR MAIN PHOTO (nick.jpg) ----
+  1. Name your photo "nick.jpg"
+  2. Put it in public/about/nick.jpg (replacing any existing file)
+  3. That is it -- the code already references this path.
+  4. Recommended: at least 800px wide, portrait orientation works best
+     (the display area is 4:5 ratio).
+
+  If you want to use a DIFFERENT filename:
+  File: src/app/about/page.tsx, line 69:
+    src="/about/nick.jpg"
+  Change "nick.jpg" to your new filename, e.g.:
+    src="/about/nick-new-headshot.jpg"
+
+  ---- TESTIMONIAL PHOTOS ----
+  1. Name them to match what is in the code:
+     - public/about/paul-fullick.jpg
+     - public/about/andy-tucker.jpg
+  2. These display as small circles (48x48px on screen), so square
+     headshot crops will look best.
+  3. No code change needed if you keep the same filenames.
+
+  If you add a new testimonial person, put their photo in public/about/
+  and reference it in the testimonials array:
+    image: "/about/their-name.jpg",
+
+
+================================================================================
+  8. HOW TO UPDATE SOCIAL MEDIA LINKS
+================================================================================
+
+  Social links appear in FOUR places. Update ALL of them when you change a URL.
+
+  ---- 1. NAVBAR ----
+  File: src/components/layout/navbar.tsx, lines 15-28:
+
+    const socialLinks = [
+      { href: ">>> CHANGE URL <<<  https://instagram.com/awakenvisuals", icon: Instagram, label: "Instagram" },
+      { href: ">>> CHANGE URL <<<  https://tiktok.com/@awakenvisuals", ... },
+      { href: ">>> CHANGE URL <<<  https://youtube.com/@awakenvisuals", ... },
+      { href: ">>> CHANGE URL <<<  https://wa.me/447734803759", ... },
+    ];
+
+  ---- 2. FOOTER ----
+  File: src/components/layout/footer.tsx, lines 12-18:
+
+    const socialLinks = [
+      { href: ">>> CHANGE URL <<<  https://instagram.com/awakenvisuals", ... },
+      { href: ">>> CHANGE URL <<<  https://tiktok.com/@awakenvisuals", ... },
+      { href: ">>> CHANGE URL <<<  https://youtube.com/@awakenvisuals", ... },
+      { href: ">>> CHANGE URL <<<  https://wa.me/447734803759", ... },
+      { href: ">>> CHANGE URL <<<  https://awakenvisuals.substack.com", ... },
+    ];
+
+  ---- 3. CONTACT PAGE ----
+  File: src/app/contact/page.tsx, lines 26-31:
+
+    const socialLinks = [
+      { ... href: ">>> CHANGE URL <<<  https://instagram.com/awakenvisuals" },
+      { ... href: ">>> CHANGE URL <<<  https://tiktok.com/@awakenvisuals" },
+      { ... href: ">>> CHANGE URL <<<  https://youtube.com/@awakenvisuals" },
+      { ... href: ">>> CHANGE URL <<<  https://awakenvisuals.substack.com" },
+    ];
+
+  ---- 4. SEO STRUCTURED DATA ----
+  File: src/app/layout.tsx, lines 74-78:
+
+    sameAs: [
+      ">>> CHANGE URL <<<  https://instagram.com/awakenvisuals",
+      ">>> CHANGE URL <<<  https://tiktok.com/@awakenvisuals",
+      ">>> CHANGE URL <<<  https://youtube.com/@awakenvisuals",
+    ],
+
+  TIP: Use VS Code's Find and Replace in Files (Cmd+Shift+H) to change a
+  URL everywhere at once. For example, search for the old Instagram URL and
+  replace with the new one.
+
+  WHATSAPP LINK FORMAT:
+  The WhatsApp link follows this format:
+    https://wa.me/COUNTRYCODEPHONENUMBER
+  No spaces, no dashes, no plus sign. Example:
+    UK number 07734 803759 becomes: https://wa.me/447734803759
+    (44 is the UK country code, drop the leading 0 from the number)
+
+  TO ADD A NEW SOCIAL PLATFORM:
+  You need to add it to all three socialLinks arrays (navbar, footer, contact).
+  Copy an existing line and change the href and label.
+  For the icon, you can use any from the "lucide-react" library:
+    https://lucide.dev/icons/
+  Import it at the top of the file, e.g.:
+    import { Instagram, Youtube, MessageCircle, Twitter } from "lucide-react";
+
+  TO REMOVE A SOCIAL PLATFORM:
+  Delete its line from all three arrays.
+
+
+================================================================================
+  9. HOW TO UPDATE CONTACT INFO
+================================================================================
+
+  ---- EMAIL ADDRESS ----
+
+  File: src/app/contact/page.tsx, line 17:
+    href: "mailto:>>> CHANGE THIS <<<  nick@awakenvisuals.com",
+
+  File: src/app/layout.tsx, line 81 (SEO structured data):
+    email: ">>> CHANGE THIS <<<  nick@awakenvisuals.com",
+
+
+  ---- WHATSAPP NUMBER ----
+
+  This appears in three files:
+
+  File: src/app/contact/page.tsx, line 22:
+    href: ">>> CHANGE URL <<<  https://wa.me/447734803759",
+
+  File: src/components/layout/navbar.tsx, line 27:
+    href: ">>> CHANGE URL <<<  https://wa.me/447734803759",
+
+  File: src/components/layout/footer.tsx, line 16:
+    href: ">>> CHANGE URL <<<  https://wa.me/447734803759",
+
+  TIP: Use Cmd+Shift+H in VS Code and search for "447734803759" to find
+  and replace all instances at once.
+
+
+  ---- CONTACT FORM (Formspree) ----
+  File: src/app/contact/page.tsx, line 168:
+
+    action="https://formspree.io/f/>>> REPLACE THIS <<<  YOUR_FORM_ID"
+
+  To set up Formspree:
+  1. Go to https://formspree.io and create a free account.
+  2. Create a new form and choose where to receive submissions.
+  3. Copy the form ID (it looks like "xyzabcde").
+  4. Replace YOUR_FORM_ID with your actual ID.
+  Example:
+    action="https://formspree.io/f/xyzabcde"
+
+  The form will send submissions to whatever email you registered with
+  on Formspree. The subject line will be:
+    "AwakenVisuals.com -- [whatever subject the visitor typed]"
+
+
+================================================================================
+  10. HOW TO DEPLOY CHANGES
+================================================================================
+
+  Your site auto-deploys when you push to GitHub. Here is the process:
+
+  Step 1: Open Terminal
+
+  Step 2: Navigate to your project:
+    cd ~/awakenvisuals.com
+
+  Step 3: Check what you changed:
+    git status
+
+    This shows modified files in red. Review them to make sure you only
+    changed what you intended.
+
+  Step 4: Test the build locally (optional but recommended):
+    npm run build
+
+    If you see errors, fix them before pushing. The error message will
+    tell you the file and line number to look at.
+
+  Step 5: Stage your changes:
+
+    To stage ALL changes:
+      git add .
+
+    Or to stage specific files only:
+      git add src/components/home/hero.tsx
+      git add public/portfolio/sport/new-photo.jpg
+
+  Step 6: Commit with a message describing what you changed:
+    git commit -m "Updated hero headline text"
+
+    Good commit message examples:
+      "Added new rugby category to sport portfolio"
+      "Updated WhatsApp number"
+      "Added 5 new F1 photos to sport portfolio"
+      "Changed about page bio text"
+
+  Step 7: Push to GitHub (triggers auto-deploy):
+    git push
+
+  Step 8: Wait 1-2 minutes, then check your live site. You may need to
+  hard-refresh your browser (Cmd+Shift+R) to see changes.
+
+  IF "git push" GIVES AN ERROR "rejected":
+    This means changes were made on GitHub that you do not have locally.
+    Run these commands:
+      git pull --rebase
+      git push
+
+  IF YOU HAVE NEVER PUSHED BEFORE:
+    You may need to set up the remote:
+      git remote add origin YOUR_GITHUB_REPO_URL
+      git push -u origin main
+
+
+================================================================================
+  11. SUBSTACK BLOG INTEGRATION
+================================================================================
+
+  Your blog (AV Club at /blog) can pull posts from Substack automatically.
+
+  HOW IT WORKS:
+  - The site fetches your Substack RSS feed.
+  - It parses the posts and displays them on /blog.
+  - Each post gets its own page at /blog/post-title-as-slug.
+  - Posts are cached for 1 hour, then re-fetched.
+  - If the feed fails or has no posts, placeholder posts are shown instead.
+
+  TO SET YOUR SUBSTACK URL:
+
+  Method 1 -- .env.local file (for local development):
+  Create a file called .env.local in the project root
+  (~/awakenvisuals.com/.env.local) with this content:
+
+    NEXT_PUBLIC_SUBSTACK_FEED_URL=https://awakenvisuals.substack.com/feed
+
+  Method 2 -- Production Environment Variables:
+  On Vercel (or your hosting platform), go to:
+    Settings > Environment Variables
+  Add:
+    Name:  NEXT_PUBLIC_SUBSTACK_FEED_URL
+    Value: https://awakenvisuals.substack.com/feed
+  Then redeploy the site.
+
+  Method 3 -- Hardcode it (simplest):
+  File: src/lib/substack.ts, line 8:
+
+    const DEFAULT_FEED_URL = process.env.NEXT_PUBLIC_SUBSTACK_FEED_URL || "https://example.substack.com/feed";
+
+  Change "https://example.substack.com/feed" to your actual Substack feed URL:
+    const DEFAULT_FEED_URL = process.env.NEXT_PUBLIC_SUBSTACK_FEED_URL || "https://awakenvisuals.substack.com/feed";
+
+  YOUR SUBSTACK FEED URL:
+  It is always your Substack URL + /feed at the end:
+    https://awakenvisuals.substack.com/feed
+
+  WHAT GETS PULLED:
+  - Post title
+  - Cover image (from the post or enclosure)
+  - Post content (full HTML)
+  - Publish date
+  - Author name
+  - An auto-generated excerpt (first 200 characters)
+
+  PLACEHOLDER POSTS (when Substack feed is unavailable):
+  File: src/app/blog/page.tsx, lines 12-73
+  These are the fallback posts. Edit them like any other text.
+
+  HOMEPAGE BLOG PREVIEW:
+  File: src/components/home/blog-preview.tsx, lines 8-36
+  These are SEPARATE hardcoded posts for the homepage. They do NOT pull
+  from Substack. Edit them independently.
+
+
+================================================================================
+  12. ADDING A NEW PAGE
+================================================================================
+
+  Next.js uses folder-based routing. The folder path = the URL path.
+
+  Example: Adding a "/services" page.
+
+  Step 1: Create the folder and file:
+    mkdir -p src/app/services
+
+  Step 2: Create a file called page.tsx inside that folder.
+  Put this template in  src/app/services/page.tsx:
+
+    export default function ServicesPage() {
+      return (
+        <main className="min-h-screen bg-[#FFFFFF]">
+          <section className="pb-8 pt-32 md:pt-40">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+              <h1 className="text-5xl font-bold tracking-[0.06em] text-[#043565] md:text-6xl lg:text-7xl">
+                Services
+              </h1>
+              <p className="mt-4 max-w-lg text-lg text-[#000000]/60">
+                Your description here.
+              </p>
+              <div className="mt-6 h-px w-20 bg-[#F5A300]" />
+            </div>
+          </section>
+
+          <section className="py-24">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+              <p className="text-lg text-[#000000]/70">
+                Your content here.
+              </p>
+            </div>
+          </section>
+        </main>
+      );
+    }
+
+  Step 3: Add a link to it in the navbar.
+  File: src/components/layout/navbar.tsx
+  Add to the navLinks array:
+    { href: "/services", label: "Services" },
+
+  Step 4: Optionally add it to the footer links too.
+  File: src/components/layout/footer.tsx
+  Add to the footerLinks array:
+    { href: "/services", label: "Services" },
+
+  The page will be available at yourdomain.com/services.
+
+  IMPORTANT: The pt-32 (padding-top) in the first section accounts for the
+  fixed navbar at the top. Always include that padding or your content will
+  be hidden behind the navigation bar.
+
+  TO ADD SEO METADATA to your new page, add this ABOVE the function:
+
+    import { Metadata } from "next";
+
+    export const metadata: Metadata = {
+      title: "Services",
+      description: "Photography and videography services by Awaken Visuals.",
+    };
+
+    export default function ServicesPage() {
       ...
-    ];
+    }
 
-  For each image you need:
-    src:      Path to your image (put file in /public/portfolio/sport/)
-    alt:      Description (for accessibility & SEO)
-    category: Must match a filter id (e.g., "football", "formula-1")
-    aspect:   "landscape" (wider) or "portrait" (taller)
-
-  STEPS TO ADD A NEW IMAGE:
-    1. Drop your photo in /public/portfolio/sport/
-    2. Add a line to portfolioImages:
-       { src: "/portfolio/sport/filename.jpg", alt: "What's in the photo", category: "football", aspect: "landscape" },
-    3. Save and push to deploy
-
-PAGE TITLE:
-  Find "Action" in the <h1> tag.
-  Find "Sports Photography by Nick Emmerson" in the <p> tag.
 
 ================================================================================
-8. EDITING THE ADVENTURE (TRAVEL) PORTFOLIO
+  13. TROUBLESHOOTING
 ================================================================================
 
-FILE: src/app/portfolio/travel/travel-portfolio.tsx
+  PROBLEM: "npm run dev" or "npm run build" shows an error
+  -------
+  - Read the error message carefully. It usually tells you the EXACT file
+    and line number where the problem is.
+  - Common causes:
+    * Missing comma between items in an array
+      WRONG:  { id: "football", label: "Football" }
+              { id: "rugby", label: "Rugby" }
+      RIGHT:  { id: "football", label: "Football" },
+              { id: "rugby", label: "Rugby" },
 
-Works EXACTLY the same as the Action portfolio above.
-Images go in /public/portfolio/travel/
-Same filters + portfolioImages arrays with comments.
+    * Missing closing quote, bracket, or brace
+      WRONG:  { id: "football", label: "Football"
+      RIGHT:  { id: "football", label: "Football" },
 
-================================================================================
-9. EDITING THE ABOUT PAGE
-================================================================================
+    * Typo in a variable name or import
 
-FILE: src/app/about/page.tsx
+  - Fix: Open the file mentioned in the error, go to the line number,
+    and look for the issue. Compare with the code around it.
 
-YOUR PHOTO:
-  Replace /public/about/nick.jpg with your own photo.
-  No code change needed.
 
-YOUR NAME/TITLE:
-  Find: "Hey! I'm Nick"
-  Find: "The creative behind Awaken Visuals."
+  PROBLEM: Page shows blank or crashes
+  -------
+  - Open your browser developer console:
+    Right-click anywhere on the page > Inspect > Console tab
+  - Look for red error messages. They will tell you what went wrong.
+  - Usually means a broken import or a reference to an image that
+    does not exist at the specified path.
 
-YOUR BIO:
-  Find the paragraphs in the "Story" section.
-  Edit the text between the quote marks.
 
-STATS:
-  Find the stats section (150M+, 4 platforms, etc.)
-  Change the numbers and labels.
+  PROBLEM: Image does not show up
+  -------
+  - Check that the file actually exists in the public/ folder at the
+    exact path you specified.
+  - Check that the filename matches EXACTLY (case-sensitive!).
+    "Hero-1.jpg" is NOT the same as "hero-1.jpg"
+  - Make sure the src path starts with / (e.g., "/portfolio/sport/photo.jpg")
+  - Do NOT include "public" in the path. The path "/portfolio/sport/photo.jpg"
+    automatically looks inside the public/ folder.
 
-TESTIMONIALS:
-  Find the testimonials array at the top:
-    const testimonials = [
-      {
-        quote: "...",
-        name: "Paul Fullick",
-        role: "Driver",
-        image: "/about/paul-fullick.jpg",
-      },
-      ...
-    ];
 
-  To add a new testimonial: Add a new object to the array.
-  To change photos: Replace files in /public/about/
-  To change text: Edit the quote, name, role fields.
+  PROBLEM: Changes don't appear on the live site
+  -------
+  - Did you push to GitHub? Run "git status" -- if there are uncommitted
+    changes, you need to add, commit, and push them.
+  - Check your hosting dashboard (Vercel/Netlify) for build errors.
+  - Try hard-refreshing your browser: Cmd+Shift+R (Mac).
+  - The site may cache aggressively. Wait 2-3 minutes after deploy.
 
-CTA AT BOTTOM:
-  Find the heading text: "Beyond the Finish Line..."
-  Edit as desired.
 
-================================================================================
-10. EDITING THE CONTACT PAGE
-================================================================================
+  PROBLEM: Blog posts not loading from Substack
+  -------
+  - Check that NEXT_PUBLIC_SUBSTACK_FEED_URL is set correctly.
+  - The URL must end in /feed:
+    https://awakenvisuals.substack.com/feed
+  - Try opening the feed URL directly in your browser. You should see
+    XML content (lots of tags like <item>, <title>, etc.).
+  - New posts take up to 1 hour to appear due to caching.
+  - If using .env.local, you must restart the dev server after changes.
 
-FILE: src/app/contact/page.tsx
 
-INTRO TEXT:
-  Find the <p> tag after the "Contact" heading.
-  Edit the text.
+  PROBLEM: Contact form not sending
+  -------
+  - Make sure you replaced YOUR_FORM_ID in src/app/contact/page.tsx
+    line 168 with an actual Formspree form ID.
+  - Go to formspree.io and check your form dashboard for submissions.
+  - The form requires JavaScript to work (it uses client-side submission).
 
-CONTACT BUTTONS:
-  Find the contactButtons array:
-    const contactButtons = [
-      { icon: Mail, label: "Email Me", href: "mailto:nick@awakenvisuals.com" },
-      { icon: MessageCircle, label: "WhatsApp Me", href: "https://wa.me/447734803759" },
-    ];
 
-  Change email/phone as needed.
+  PROBLEM: "git push" fails with "rejected"
+  -------
+  - Someone (or you on another computer) pushed changes you don't have.
+  - Run:
+      git pull --rebase
+      git push
 
-SOCIAL LINKS:
-  Find the socialLinks array. Add/remove platforms.
 
-FORM:
-  The form uses Formspree. To set it up:
-    1. Go to formspree.io and create an account
-    2. Create a new form
-    3. Copy your form ID
-    4. Find: action="https://formspree.io/f/YOUR_FORM_ID"
-    5. Replace YOUR_FORM_ID with your actual ID
+  PROBLEM: Text looks wrong -- special characters appear as code
+  -------
+  Use these replacements in HTML (text inside < > tags):
+    Apostrophe:   &apos;     (displays as ')
+    Ampersand:    &amp;      (displays as &)
+    Double quote: &quot;     (displays as ")
 
-  The form sends emails with subject "AwakenVisuals.com — [their subject]"
+  OR wrap the text in curly braces and quotes:
+    {"text with 'apostrophes' and & ampersands"}
+  This lets you use normal characters.
 
-================================================================================
-11. EDITING THE BLOG (AV CLUB)
-================================================================================
 
-The blog pulls from your Substack automatically.
+  PROBLEM: Want to undo all changes since last commit
+  -------
+  - To see what changed:
+      git diff
 
-TO CONNECT YOUR SUBSTACK:
-  1. Open .env file (or create .env.local)
-  2. Add: NEXT_PUBLIC_SUBSTACK_FEED_URL=https://awakenvisuals.substack.com/feed
-  3. Restart the dev server / redeploy
+  - To undo changes to ONE file:
+      git checkout -- src/path/to/file.tsx
 
-Blog posts will appear automatically when you publish on Substack.
-Each post gets its own page at /blog/[post-slug]
+  - To undo ALL changes (be careful -- this cannot be undone!):
+      git checkout -- .
 
-FILES:
-  src/app/blog/page.tsx          = Blog listing page
-  src/app/blog/[slug]/page.tsx   = Individual blog post page
-  src/components/home/blog-preview.tsx = Homepage blog preview
 
-PAGE TITLE:
-  Find "AV Club" in blog/page.tsx
+  PROBLEM: "npm install" or "npm run dev" gives permission errors
+  -------
+  - Try:
+      sudo npm install
+  - Or fix permissions:
+      sudo chown -R $(whoami) ~/awakenvisuals.com/node_modules
 
-================================================================================
-12. CHANGING COLOURS
-================================================================================
 
-FILE: src/app/globals.css
+  PROBLEM: Port 3000 already in use
+  -------
+  - Another dev server is already running. Either:
+    * Find the Terminal window running it and press Ctrl+C
+    * Or run on a different port:
+        npm run dev -- -p 3001
+      Then open http://localhost:3001
 
-All colours are defined as CSS variables in the :root section:
-  --background: #FFFFFF     (page background)
-  --foreground: #000000     (main text colour)
-  --primary: #043565        (navy blue — main brand colour)
-  --accent: #F5A300         (yellow/gold — accent colour)
-  --secondary: #D4E2ED      (light blue)
-  --muted-foreground: #7A9090  (grey text)
-
-To change a colour: Find the hex code and replace it.
-
-NOTE: Many components use hardcoded hex values (e.g., bg-[#043565]).
-If you change the brand colours, search the entire src/ folder for the old
-hex code and replace all instances.
-
-Current colour scheme:
-  Navy:       #043565
-  Yellow:     #F5A300
-  Black:      #000000
-  Light Blue: #D4E2ED
-  Grey:       #7A9090
 
 ================================================================================
-13. SEO
+  QUICK REFERENCE: BRAND COLORS
 ================================================================================
 
-SITE-WIDE SEO:
-  FILE: src/app/layout.tsx
-  Edit the metadata object: title, description, keywords
+  Navy Blue:     #043565
+  Gold/Amber:    #F5A300
+  Light Grey:    #D4E2ED
+  Black:         #000000
+  White:         #FFFFFF
 
-PER-PAGE SEO:
-  Each page.tsx can export its own metadata. Look for:
-    export const metadata: Metadata = { ... }
-
-SITEMAP:
-  FILE: src/app/sitemap.ts
-  Auto-generated. Add new pages here if you create them.
-
-ROBOTS:
-  FILE: src/app/robots.ts
-  Controls search engine crawling.
-
-STRUCTURED DATA:
-  In src/app/layout.tsx, find the <script type="application/ld+json"> tag.
-  This tells Google/AI about your business.
 
 ================================================================================
-14. TROUBLESHOOTING
+  QUICK REFERENCE: KEY FILE PATHS
 ================================================================================
 
-SITE WON'T BUILD:
-  Run: pnpm build
-  Read the error message — it usually tells you the file and line number.
-  Common issues:
-    - Typo in a file path
-    - Missing closing bracket or quote
-    - Image file doesn't exist at the path specified
+  Homepage:            src/app/page.tsx
+  Hero Section:        src/components/home/hero.tsx
+  Blog Preview:        src/components/home/blog-preview.tsx
+  Contact CTA:         src/components/home/contact-cta.tsx
+  Navbar:              src/components/layout/navbar.tsx
+  Footer:              src/components/layout/footer.tsx
+  About Page:          src/app/about/page.tsx
+  Contact Page:        src/app/contact/page.tsx
+  Blog Page:           src/app/blog/page.tsx
+  Blog Post Page:      src/app/blog/[slug]/page.tsx
+  Action Portfolio:    src/app/portfolio/sport/sport-portfolio.tsx
+  Adventure Portfolio: src/app/portfolio/travel/travel-portfolio.tsx
+  Colors/CSS:          src/app/globals.css
+  SEO/Metadata:        src/app/layout.tsx
+  Substack Fetcher:    src/lib/substack.ts
+  Hero Images:         public/gallery/
+  About Photos:        public/about/
+  Sport Photos:        public/portfolio/sport/
+  Travel Photos:       public/portfolio/travel/
 
-IMAGES NOT SHOWING:
-  - Make sure the image file is in the /public/ folder
-  - Make sure the path in code matches exactly (case-sensitive!)
-  - For external images, check next.config.ts remotePatterns
-
-CHANGES NOT APPEARING ON LIVE SITE:
-  - Did you push to GitHub? (git push)
-  - Check Netlify dashboard for build status
-  - Clear your browser cache (Cmd+Shift+R)
-
-RUNNING LOCALLY:
-  cd ~/awakenvisuals.com
-  pnpm dev
-  # Opens at http://localhost:3000
-
-INSTALLING DEPENDENCIES:
-  cd ~/awakenvisuals.com
-  pnpm install
 
 ================================================================================
-END OF GUIDE
+  QUICK REFERENCE: COMMON TERMINAL COMMANDS
+================================================================================
+
+  cd ~/awakenvisuals.com     Navigate to the project folder
+  npm install                Install dependencies (first time or after updates)
+  npm run dev                Start local dev server at http://localhost:3000
+  npm run build              Test production build (catches errors)
+  git status                 See what files you changed
+  git diff                   See the actual changes in detail
+  git add .                  Stage all changes for commit
+  git commit -m "message"    Save changes with a description
+  git push                   Push to GitHub (triggers deploy)
+  git pull                   Get latest changes from GitHub
+  Ctrl+C                     Stop the dev server
+
+
+================================================================================
+  END OF GUIDE
 ================================================================================
