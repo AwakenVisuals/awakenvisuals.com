@@ -28,7 +28,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   if (!post) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center bg-[#FFFFFF]">
+      <main className="flex min-h-screen flex-col items-center justify-center bg-[#F5F3EE]">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-[#043565]">Post Not Found</h1>
           <p className="mt-4 text-lg text-[#000000]/60">
@@ -55,7 +55,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   });
 
   return (
-    <main className="min-h-screen bg-[#FFFFFF]">
+    <main className="min-h-screen bg-[#F5F3EE]">
       {/* Title Card Hero — inspired by parcfermeco.com */}
       <section className="relative bg-[#043565]">
         <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -94,7 +94,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       {/* Description Blurb */}
       {post.excerpt && (
-        <section className="border-b border-[#D4E2ED] bg-[#FFFFFF] py-12 md:py-16">
+        <section className="border-b border-[#D4E2ED] bg-[#F5F3EE] py-12 md:py-16">
           <div className="mx-auto max-w-3xl px-6 lg:px-8">
             <p className="text-xl leading-relaxed text-[#000000]/70 md:text-2xl font-light">
               {post.excerpt}

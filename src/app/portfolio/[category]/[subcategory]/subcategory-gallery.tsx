@@ -37,7 +37,7 @@ export function SubcategoryGallery({
   }));
 
   return (
-    <main className="min-h-screen bg-[#FFFFFF]">
+    <main className="min-h-screen bg-[#F5F3EE]">
       {/* Header */}
       <section className="px-6 pt-28 pb-8 md:pt-36 md:pb-12">
         <div className="mx-auto max-w-7xl">

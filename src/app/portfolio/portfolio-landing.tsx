@@ -9,7 +9,7 @@ export function PortfolioLanding() {
   const isHeadingInView = useInView(headingRef, { once: true });
 
   return (
-    <main className="min-h-screen bg-[#FFFFFF]">
+    <main className="min-h-screen bg-[#F5F3EE]">
       {/* Hero heading */}
       <section className="flex flex-col items-center justify-center px-6 pt-32 pb-16 md:pt-40 md:pb-20">
         <motion.div

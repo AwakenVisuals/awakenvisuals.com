@@ -199,12 +199,10 @@ function GalleryScene({
             loader.load(
               img.src,
               (tex) => {
-                console.log("[Gallery] Loaded:", img.src);
                 resolve(tex);
               },
               undefined,
-              (err) => {
-                console.error("[Gallery] Failed to load:", img.src, err);
+              () => {
                 // On error, create a small colored placeholder texture
                 const canvas = document.createElement("canvas");
                 canvas.width = 2;

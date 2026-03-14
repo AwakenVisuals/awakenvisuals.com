@@ -24,6 +24,10 @@ const galleryImages = [
   "/gallery/hero-8.jpg",
   "/gallery/hero-9.jpg",
   "/gallery/hero-10.jpg",
+  "/gallery/hero-11.jpg",
+  "/gallery/hero-12.jpg",
+  "/gallery/hero-13.jpg",
+  "/gallery/hero-14.jpg",
 ];
 
 class GalleryErrorBoundary extends React.Component<
@@ -52,7 +56,7 @@ export function Hero() {
           <InfiniteGallery
             images={galleryImages}
             speed={0.6}
-            visibleCount={28}
+            visibleCount={23}
             className="h-full w-full"
           />
         </GalleryErrorBoundary>

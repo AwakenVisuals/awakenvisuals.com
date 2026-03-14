@@ -19,7 +19,7 @@ const contactButtons = [
   {
     icon: MessageCircle,
     label: "WhatsApp Me",
-    href: "https://wa.me/447734803759",
+    href: `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "447734803759"}`,
   },
 ];
 

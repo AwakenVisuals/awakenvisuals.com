@@ -78,6 +78,9 @@ importers:
       netlify-cli:
         specifier: ^24.2.0
         version: 24.2.0(@types/node@20.19.37)(picomatch@4.0.3)
+      sharp:
+        specifier: ^0.34.5
+        version: 0.34.5
       tailwindcss:
         specifier: ^4
         version: 4.2.1

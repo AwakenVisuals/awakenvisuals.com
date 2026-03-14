@@ -25,7 +25,7 @@ const socialLinks = [
     label: "TikTok",
   },
   { href: "https://youtube.com/@awakenvisuals", icon: Youtube, label: "YouTube" },
-  { href: "https://wa.me/447734803759", icon: MessageCircle, label: "WhatsApp" },
+  { href: `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "447734803759"}`, icon: MessageCircle, label: "WhatsApp" },
 ];
 
 export function Navbar() {

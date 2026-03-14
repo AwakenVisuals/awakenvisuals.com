@@ -44,3 +44,6 @@ next-env.d.ts
 
 # Local Netlify folder
 .netlify
+
+# Full-res original images (too large for git)
+public/gallery/originals/
