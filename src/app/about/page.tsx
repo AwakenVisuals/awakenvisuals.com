@@ -55,7 +55,7 @@ export default function AboutPage() {
       </section>
 
       {/* Story */}
-      <section ref={storyRef} className="bg-[#F5F3EE] py-24 md:py-32">
+      <section ref={storyRef} className="bg-[#F5F3EE] py-12 md:py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
             <motion.div
@@ -112,7 +112,7 @@ export default function AboutPage() {
       </section>
 
       {/* Testimonials */}
-      <section ref={testimonialsRef} className="bg-[#F5F3EE] py-24 md:py-32">
+      <section ref={testimonialsRef} className="bg-[#F5F3EE] py-12 md:py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -171,10 +171,10 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#043565] py-24">
+      <section className="bg-[#043565] py-14">
         <div className="mx-auto max-w-3xl px-6 text-center lg:px-8">
           <h2 className="text-3xl font-bold tracking-[0.06em] text-white md:text-4xl">
-            Beyond the Finish Line and Off the Beaten Path. Above All, Human.
+            Beyond the finish line and off the beaten path. Above all, human.
           </h2>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link

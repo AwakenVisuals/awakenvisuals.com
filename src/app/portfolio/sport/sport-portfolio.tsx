@@ -31,35 +31,37 @@ const filters = [
  * - src: path to your image (put in /public/portfolio/sport/)
  * - alt: description of the image
  * - category: must match a filter id above
- * - aspect: "landscape" or "portrait" (affects grid layout)
+ * - width: image width in pixels (for aspect ratio calculation)
+ * - height: image height in pixels (for aspect ratio calculation)
  *
  * Example to add a new image:
- * { src: "/portfolio/sport/my-new-photo.jpg", alt: "Description", category: "football", aspect: "landscape" },
+ * { src: "/portfolio/sport/my-new-photo.jpg", alt: "Description", category: "football", width: 6000, height: 4000 },
  * ============================================
  */
 interface PortfolioImage {
   src: string;
   alt: string;
   category: string;
-  aspect: "landscape" | "portrait" | "square" | "wide" | "ultrawide";
+  width: number;
+  height: number;
 }
 
 const portfolioImages: PortfolioImage[] = [
   // Football
-  { src: "/gallery/hero-1.jpg", alt: "Football action shot", category: "football", aspect: "landscape" },
-  { src: "/gallery/hero-5.jpg", alt: "Football match coverage", category: "football", aspect: "portrait" },
+  { src: "/gallery/hero-1.jpg", alt: "Football action shot", category: "football", width: 6000, height: 4000 },
+  { src: "/gallery/hero-5.jpg", alt: "Football match coverage", category: "football", width: 3000, height: 4500 },
   // Formula 1
-  { src: "/gallery/hero-2.jpg", alt: "Formula 1 racing", category: "formula-1", aspect: "landscape" },
-  { src: "/gallery/hero-6.jpg", alt: "F1 paddock", category: "formula-1", aspect: "portrait" },
+  { src: "/gallery/hero-2.jpg", alt: "Formula 1 racing", category: "formula-1", width: 6000, height: 4000 },
+  { src: "/gallery/hero-6.jpg", alt: "F1 paddock", category: "formula-1", width: 3000, height: 4500 },
   // Formula E
-  { src: "/gallery/hero-3.jpg", alt: "Formula E racing", category: "formula-e", aspect: "landscape" },
-  { src: "/gallery/hero-7.jpg", alt: "Formula E event", category: "formula-e", aspect: "landscape" },
+  { src: "/gallery/hero-3.jpg", alt: "Formula E racing", category: "formula-e", width: 4000, height: 6000 },
+  { src: "/gallery/hero-7.jpg", alt: "Formula E event", category: "formula-e", width: 3000, height: 2000 },
   // Sportscars
-  { src: "/gallery/hero-4.jpg", alt: "Sportscar racing", category: "sportscars", aspect: "landscape" },
-  { src: "/gallery/hero-8.jpg", alt: "GT racing", category: "sportscars", aspect: "portrait" },
+  { src: "/gallery/hero-4.jpg", alt: "Sportscar racing", category: "sportscars", width: 6000, height: 4000 },
+  { src: "/gallery/hero-8.jpg", alt: "GT racing", category: "sportscars", width: 3000, height: 4500 },
   // GB3 & GB4
-  { src: "/gallery/hero-9.jpg", alt: "GB3 racing", category: "gb3-gb4", aspect: "landscape" },
-  { src: "/gallery/hero-10.jpg", alt: "GB4 racing", category: "gb3-gb4", aspect: "landscape" },
+  { src: "/gallery/hero-9.jpg", alt: "GB3 racing", category: "gb3-gb4", width: 4000, height: 6000 },
+  { src: "/gallery/hero-10.jpg", alt: "GB4 racing", category: "gb3-gb4", width: 6000, height: 4000 },
 ];
 
 export function SportPortfolio() {
@@ -85,7 +87,7 @@ export function SportPortfolio() {
             <span className="text-sm font-semibold uppercase tracking-[0.2em] text-[#F5A300]">
               Portfolio
             </span>
-            <h1 className="mt-4 text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-[0.06em] text-white">
+            <h1 className="mt-4 text-5xl md:text-6xl lg:text-7xl font-bold tracking-[0.06em] text-white">
               Action
             </h1>
             <p className="mt-4 text-base tracking-wide text-white/50">
@@ -115,7 +117,7 @@ export function SportPortfolio() {
       {/* Gallery Grid */}
       <section className="px-6 pb-32 md:px-10">
         <div className="mx-auto max-w-7xl">
-          <motion.div layout className="columns-2 gap-4 md:columns-3 xl:columns-4">
+          <div className="columns-2 gap-4 md:columns-3 xl:columns-4">
             <AnimatePresence mode="popLayout">
               {filteredImages.map((image, index) => (
                 <motion.div
@@ -125,28 +127,20 @@ export function SportPortfolio() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className="mb-4 break-inside-avoid"
+                  className="mb-4 break-inside-avoid overflow-hidden group"
                 >
-                  <div className={`group relative overflow-hidden ${
-                    image.aspect === "portrait" ? "aspect-[3/4]" :
-                    image.aspect === "square" ? "aspect-square" :
-                    image.aspect === "wide" ? "aspect-[16/9]" :
-                    image.aspect === "ultrawide" ? "aspect-[21/9]" :
-                    "aspect-[3/2]"
-                  }`}>
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
-                  </div>
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={image.width}
+                    height={image.height}
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="w-full h-auto transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
                 </motion.div>
               ))}
             </AnimatePresence>
-          </motion.div>
+          </div>
 
           {filteredImages.length === 0 && (
             <div className="py-20 text-center">

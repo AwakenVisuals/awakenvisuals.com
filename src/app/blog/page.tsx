@@ -55,7 +55,7 @@ export default async function BlogPage() {
           <span className="text-sm font-semibold uppercase tracking-[0.2em] text-[#F5A300]">
             Stories &amp; Behind the Scenes
           </span>
-          <h1 className="mt-4 text-5xl font-bold uppercase tracking-[0.06em] text-white md:text-6xl lg:text-7xl">
+          <h1 className="mt-4 text-5xl font-bold tracking-[0.06em] text-white md:text-6xl lg:text-7xl">
             AV Club
           </h1>
           <div className="mx-auto mt-6 h-px w-20 bg-[#F5A300]" />
