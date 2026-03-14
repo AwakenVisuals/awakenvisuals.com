@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { Menu, X, Instagram, Youtube, MessageCircle } from "lucide-react";
@@ -29,41 +29,18 @@ const socialLinks = [
 ];
 
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.08)]"
-            : "bg-transparent"
-        }`}
-      >
+      <header className="absolute top-0 left-0 right-0 z-50">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <span
-              className={`text-xl font-semibold uppercase tracking-[0.25em] transition-colors duration-300 ${
-                isScrolled ? "text-[#043565]" : "text-white"
-              }`}
-            >
+            <span className="text-xl font-semibold uppercase tracking-[0.25em] text-white">
               Awaken
             </span>
-            <span
-              className={`text-xl font-light uppercase tracking-[0.25em] transition-colors duration-300 ${
-                isScrolled ? "text-[#043565]" : "text-white"
-              }`}
-            >
+            <span className="text-xl font-light uppercase tracking-[0.25em] text-white">
               Visuals
             </span>
           </Link>
@@ -100,9 +77,7 @@ export function Navbar() {
           {/* Mobile Hamburger */}
           <button
             onClick={() => setIsMobileOpen(true)}
-            className={`md:hidden transition-colors duration-300 ${
-              isScrolled ? "text-[#000000]" : "text-white"
-            }`}
+            className="md:hidden text-white"
             aria-label="Open menu"
           >
             <Menu className="h-6 w-6" />
