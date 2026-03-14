@@ -28,7 +28,7 @@ const footerLinks = [
 export function Footer() {
   return (
     <footer className="bg-[#043565]">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
         <div className="flex flex-col items-center gap-10 md:flex-row md:justify-between md:items-start">
           {/* Logo & Tagline */}
           <div className="text-center md:text-left">
@@ -76,7 +76,7 @@ export function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-14 border-t border-white/10 pt-8 text-center">
+        <div className="mt-8 border-t border-white/10 pt-6 text-center">
           <p className="text-xs text-white/30 tracking-wide">
             &copy; {new Date().getFullYear()} Awaken Visuals. All rights reserved.
           </p>

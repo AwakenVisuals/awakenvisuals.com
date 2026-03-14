@@ -64,19 +64,19 @@ export default function ContactPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#FFFFFF]">
-      {/* Header */}
-      <section className="pb-8 pt-32 md:pt-40">
+    <main className="min-h-screen bg-[#F5F3EE]">
+      {/* Header with dark banner for navbar contrast */}
+      <section className="bg-[#043565] pb-16 pt-32 md:pt-40">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            <h1 className="text-5xl font-bold tracking-[0.06em] text-[#043565] md:text-6xl lg:text-7xl">
+            <h1 className="text-5xl font-bold tracking-[0.06em] text-white md:text-6xl lg:text-7xl">
               Contact
             </h1>
-            <p className="mt-4 max-w-lg text-lg text-[#000000]/60">
+            <p className="mt-4 max-w-lg text-lg text-white/60">
               Have a story to tell, a project to bring to life, or just want to say hey?
               I&apos;d love to hear from you. Let&apos;s chat about what we can create together.
             </p>
@@ -150,7 +150,7 @@ export default function ContactPage() {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
             >
               {submitted ? (
-                <div className="flex items-center justify-center border border-[#D4E2ED] bg-[#FFFFFF] p-8">
+                <div className="flex items-center justify-center border border-[#D4E2ED] bg-[#FAFAF7] p-8">
                   <div className="text-center">
                     <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center bg-[#043565]/5">
                       <Mail className="h-7 w-7 text-[#043565]" />
@@ -168,7 +168,7 @@ export default function ContactPage() {
                   action="https://formspree.io/f/YOUR_FORM_ID"
                   method="POST"
                   onSubmit={handleSubmit}
-                  className="space-y-6 border border-[#D4E2ED] bg-[#FFFFFF] p-8"
+                  className="space-y-6 border border-[#D4E2ED] bg-[#FAFAF7] p-8"
                 >
                   <input type="hidden" name="_replyto" />
                   <input type="hidden" name="_subject" />
@@ -182,7 +182,7 @@ export default function ContactPage() {
                       id="name"
                       name="name"
                       required
-                      className="mt-2 w-full border border-[#D4E2ED] bg-[#FFFFFF] px-4 py-3 text-[#000000] placeholder:text-[#000000]/30 focus:border-[#043565] focus:outline-none focus:ring-1 focus:ring-[#043565] transition-colors"
+                      className="mt-2 w-full border border-[#D4E2ED] bg-[#FAFAF7] px-4 py-3 text-[#000000] placeholder:text-[#000000]/30 focus:border-[#043565] focus:outline-none focus:ring-1 focus:ring-[#043565] transition-colors"
                       placeholder="Your name"
                     />
                   </div>
@@ -196,7 +196,7 @@ export default function ContactPage() {
                       id="email"
                       name="email"
                       required
-                      className="mt-2 w-full border border-[#D4E2ED] bg-[#FFFFFF] px-4 py-3 text-[#000000] placeholder:text-[#000000]/30 focus:border-[#043565] focus:outline-none focus:ring-1 focus:ring-[#043565] transition-colors"
+                      className="mt-2 w-full border border-[#D4E2ED] bg-[#FAFAF7] px-4 py-3 text-[#000000] placeholder:text-[#000000]/30 focus:border-[#043565] focus:outline-none focus:ring-1 focus:ring-[#043565] transition-colors"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -210,7 +210,7 @@ export default function ContactPage() {
                       id="subject"
                       name="subject"
                       required
-                      className="mt-2 w-full border border-[#D4E2ED] bg-[#FFFFFF] px-4 py-3 text-[#000000] placeholder:text-[#000000]/30 focus:border-[#043565] focus:outline-none focus:ring-1 focus:ring-[#043565] transition-colors"
+                      className="mt-2 w-full border border-[#D4E2ED] bg-[#FAFAF7] px-4 py-3 text-[#000000] placeholder:text-[#000000]/30 focus:border-[#043565] focus:outline-none focus:ring-1 focus:ring-[#043565] transition-colors"
                       placeholder="What's this about?"
                     />
                   </div>
@@ -224,7 +224,7 @@ export default function ContactPage() {
                       name="message"
                       rows={5}
                       required
-                      className="mt-2 w-full resize-none border border-[#D4E2ED] bg-[#FFFFFF] px-4 py-3 text-[#000000] placeholder:text-[#000000]/30 focus:border-[#043565] focus:outline-none focus:ring-1 focus:ring-[#043565] transition-colors"
+                      className="mt-2 w-full resize-none border border-[#D4E2ED] bg-[#FAFAF7] px-4 py-3 text-[#000000] placeholder:text-[#000000]/30 focus:border-[#043565] focus:outline-none focus:ring-1 focus:ring-[#043565] transition-colors"
                       placeholder="Tell me about your project..."
                     />
                   </div>

@@ -9,7 +9,7 @@ export function ContactCTA() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="bg-[#043565] py-28 md:py-36">
+    <section ref={ref} className="bg-[#043565] py-16 md:py-20">
       <div className="mx-auto max-w-4xl px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

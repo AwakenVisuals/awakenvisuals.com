@@ -8,6 +8,7 @@ import { Menu, X, Instagram, Youtube, MessageCircle } from "lucide-react";
 const navLinks = [
   { href: "/portfolio/sport", label: "Action" },
   { href: "/portfolio/travel", label: "Adventure" },
+  { href: "/blog", label: "AV Club" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];

@@ -67,7 +67,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
         >
-          <h1 className="text-4xl font-light italic leading-tight tracking-wide text-white sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 className="text-xl font-light italic leading-tight tracking-wide text-[#F5A300] sm:text-2xl md:text-3xl lg:text-4xl">
             Bringing a human touch
             <br />
             to your stories
@@ -82,13 +82,13 @@ export function Hero() {
         >
           <Link
             href="/portfolio/sport"
-            className="border border-white/30 px-10 py-3 text-xs font-medium uppercase tracking-[0.2em] text-white transition-all duration-300 hover:border-[#F5A300] hover:text-[#F5A300]"
+            className="border border-[#F5A300]/40 bg-[#F5A300]/10 px-10 py-3 text-xs font-medium uppercase tracking-[0.2em] text-[#F5A300] transition-all duration-300 hover:bg-[#F5A300]/20 hover:border-[#F5A300]"
           >
             Action
           </Link>
           <Link
             href="/portfolio/travel"
-            className="border border-white/30 px-10 py-3 text-xs font-medium uppercase tracking-[0.2em] text-white transition-all duration-300 hover:border-[#F5A300] hover:text-[#F5A300]"
+            className="border border-[#F5A300]/40 bg-[#F5A300]/10 px-10 py-3 text-xs font-medium uppercase tracking-[0.2em] text-[#F5A300] transition-all duration-300 hover:bg-[#F5A300]/20 hover:border-[#F5A300]"
           >
             Adventure
           </Link>

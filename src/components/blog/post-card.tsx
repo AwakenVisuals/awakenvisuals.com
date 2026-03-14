@@ -23,7 +23,7 @@ export function PostCard({ post }: PostCardProps) {
       className="group"
     >
       <Link href={`/blog/${post.slug}`} className="block">
-        <div className="overflow-hidden rounded-xl border border-[#000000]/5 bg-white transition-colors duration-300 hover:border-[#F5A300]/30">
+        <div className="overflow-hidden border border-[#000000]/8 bg-[#FAFAF7] transition-colors duration-300 hover:border-[#F5A300]/30">
           {/* Cover Image */}
           <div className="relative aspect-[16/10] overflow-hidden">
             <Image

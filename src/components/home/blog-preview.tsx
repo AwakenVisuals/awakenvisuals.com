@@ -40,7 +40,7 @@ export function BlogPreview() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="bg-[#FFFFFF] py-24 md:py-32">
+    <section ref={ref} className="bg-[#F0EDE6] py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -70,7 +70,7 @@ export function BlogPreview() {
             >
               <Link
                 href={`/blog/${post.slug}`}
-                className="group block bg-white"
+                className="group block bg-[#F5F3EE]"
               >
                 <div className="relative aspect-[3/2] overflow-hidden">
                   <Image

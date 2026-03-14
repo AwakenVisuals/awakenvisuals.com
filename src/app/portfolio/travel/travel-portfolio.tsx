@@ -38,7 +38,7 @@ interface PortfolioImage {
   src: string;
   alt: string;
   category: string;
-  aspect: "landscape" | "portrait";
+  aspect: "landscape" | "portrait" | "square" | "wide" | "ultrawide";
 }
 
 const portfolioImages: PortfolioImage[] = [
@@ -105,7 +105,7 @@ export function TravelPortfolio() {
       {/* Gallery Grid */}
       <section className="px-6 pb-32 md:px-10">
         <div className="mx-auto max-w-7xl">
-          <motion.div layout className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+          <motion.div layout className="columns-2 gap-4 md:columns-3 xl:columns-4">
             <AnimatePresence mode="popLayout">
               {filteredImages.map((image, index) => (
                 <motion.div
@@ -118,7 +118,11 @@ export function TravelPortfolio() {
                   className="mb-4 break-inside-avoid"
                 >
                   <div className={`group relative overflow-hidden ${
-                    image.aspect === "portrait" ? "aspect-[3/4]" : "aspect-[4/3]"
+                    image.aspect === "portrait" ? "aspect-[3/4]" :
+                    image.aspect === "square" ? "aspect-square" :
+                    image.aspect === "wide" ? "aspect-[16/9]" :
+                    image.aspect === "ultrawide" ? "aspect-[21/9]" :
+                    "aspect-[3/2]"
                   }`}>
                     <Image
                       src={image.src}

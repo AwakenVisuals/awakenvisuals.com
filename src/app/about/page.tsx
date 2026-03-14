@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
-import { Eye, Play, TrendingUp, Quote } from "lucide-react";
+import { Quote } from "lucide-react";
 
 const testimonials = [
   {
@@ -34,19 +34,19 @@ export default function AboutPage() {
   });
 
   return (
-    <main className="min-h-screen bg-[#FFFFFF]">
-      {/* Hero */}
-      <section className="pb-8 pt-32 md:pt-40">
+    <main className="min-h-screen bg-[#F5F3EE]">
+      {/* Hero with dark header for navbar contrast */}
+      <section className="bg-[#043565] pb-16 pt-32 md:pt-40">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            <h1 className="text-5xl font-bold tracking-[0.06em] text-[#043565] md:text-6xl lg:text-7xl">
+            <h1 className="text-5xl font-bold tracking-[0.06em] text-white md:text-6xl lg:text-7xl">
               {"Hey! I'm Nick"}
             </h1>
-            <p className="mt-4 max-w-lg text-lg text-[#000000]/60">
+            <p className="mt-4 max-w-lg text-lg text-white/60">
               The creative behind Awaken Visuals.
             </p>
             <div className="mt-6 h-px w-20 bg-[#F5A300]" />
@@ -55,7 +55,7 @@ export default function AboutPage() {
       </section>
 
       {/* Story */}
-      <section ref={storyRef} className="bg-white py-24 md:py-32">
+      <section ref={storyRef} className="bg-[#F5F3EE] py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
             <motion.div
@@ -111,61 +111,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Stats Banner */}
-      <section className="bg-[#043565] py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-3">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-              <Play className="mx-auto h-8 w-8 text-[#F5A300]" />
-              <p className="mt-4 text-3xl font-bold tracking-wider text-white md:text-4xl">
-                150M+
-              </p>
-              <p className="mt-2 text-sm uppercase tracking-[0.2em] text-white/60">
-                Views Across Platforms
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-center"
-            >
-              <TrendingUp className="mx-auto h-8 w-8 text-[#F5A300]" />
-              <p className="mt-4 text-3xl font-bold tracking-wider text-white md:text-4xl">
-                4
-              </p>
-              <p className="mt-2 text-sm uppercase tracking-[0.2em] text-white/60">
-                Major Platforms
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-center"
-            >
-              <Eye className="mx-auto h-8 w-8 text-[#F5A300]" />
-              <p className="mt-4 text-3xl font-bold tracking-wider text-white md:text-4xl">
-                Instagram, TikTok, Facebook &amp; YouTube
-              </p>
-              <p className="mt-2 text-sm uppercase tracking-[0.2em] text-white/60">
-                Reach
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* Testimonials */}
-      <section ref={testimonialsRef} className="bg-white py-24 md:py-32">
+      <section ref={testimonialsRef} className="bg-[#F5F3EE] py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -192,7 +139,7 @@ export default function AboutPage() {
                   delay: index * 0.15,
                   ease: [0.25, 0.4, 0.25, 1],
                 }}
-                className="border border-[#D4E2ED] bg-[#FFFFFF] p-8"
+                className="border border-[#D4E2ED] bg-[#FAFAF7] p-8"
               >
                 <Quote className="h-8 w-8 text-[#F5A300]/40" />
                 <p className="mt-4 text-lg leading-relaxed text-[#000000]/70 italic">
