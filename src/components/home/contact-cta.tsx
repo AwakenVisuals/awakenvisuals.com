@@ -20,14 +20,14 @@ export function ContactCTA() {
             Let&apos;s Create Something Together
           </h2>
           <p className="mx-auto mt-6 max-w-lg text-base leading-relaxed text-white/50">
-            Have an event, a story, or an idea you want brought to life? Let&apos;s make it happen.
+            Whether it&apos;s the raw energy of the game or the quiet magic of a new horizon, Awaken Visuals is here to capture the pulse of it. Got a story to tell, a sport to cover, or a journey to document?
           </p>
           <div className="mt-10">
             <Link
               href="/contact"
-              className="inline-block border border-[#C8A84E] bg-[#C8A84E]/10 px-12 py-4 text-xs font-medium uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-[#C8A84E]/20"
+              className="inline-block border border-[#F5A300] bg-[#F5A300]/10 px-12 py-4 text-xs font-medium uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-[#F5A300]/20"
             >
-              I want to create cool stuff together!
+              I want to create something cool
             </Link>
           </div>
         </motion.div>

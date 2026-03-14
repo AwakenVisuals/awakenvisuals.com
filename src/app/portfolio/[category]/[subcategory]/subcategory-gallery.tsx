@@ -37,13 +37,13 @@ export function SubcategoryGallery({
   }));
 
   return (
-    <main className="min-h-screen bg-[#F7F5F0]">
+    <main className="min-h-screen bg-[#FFFFFF]">
       {/* Header */}
       <section className="px-6 pt-28 pb-8 md:pt-36 md:pb-12">
         <div className="mx-auto max-w-7xl">
           <Link
             href={`/portfolio/${category}`}
-            className="inline-flex items-center gap-2 text-[13px] uppercase tracking-[0.15em] text-[#1A1A1A]/40 transition-colors hover:text-[#C8A84E] mb-10"
+            className="inline-flex items-center gap-2 text-[13px] uppercase tracking-[0.15em] text-[#000000]/40 transition-colors hover:text-[#F5A300] mb-10"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -54,15 +54,15 @@ export function SubcategoryGallery({
             animate={isHeadingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            <h1 className="text-5xl font-light uppercase tracking-[0.15em] text-[#1A1A1A] md:text-6xl lg:text-7xl">
+            <h1 className="text-5xl font-light uppercase tracking-[0.15em] text-[#000000] md:text-6xl lg:text-7xl">
               {title}
             </h1>
             {description && (
-              <p className="mt-4 max-w-lg text-base text-[#1A1A1A]/50 tracking-wide normal-case">
+              <p className="mt-4 max-w-lg text-base text-[#000000]/50 tracking-wide normal-case">
                 {description}
               </p>
             )}
-            <div className="mt-8 h-px w-16 bg-[#C8A84E]" />
+            <div className="mt-8 h-px w-16 bg-[#F5A300]" />
           </motion.div>
         </div>
       </section>

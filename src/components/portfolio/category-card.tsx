@@ -49,7 +49,7 @@ export function CategoryCard({
           <p className="mt-3 text-sm tracking-[0.15em] uppercase text-white/70">
             {subtitle}
           </p>
-          <span className="mt-6 inline-block text-[13px] uppercase tracking-[0.2em] text-[#C8A84E] opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+          <span className="mt-6 inline-block text-[13px] uppercase tracking-[0.2em] text-[#F5A300] opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
             View Collection
           </span>
         </div>

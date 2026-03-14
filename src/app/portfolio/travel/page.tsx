@@ -4,7 +4,7 @@ import { TravelPortfolio } from "./travel-portfolio";
 export const metadata: Metadata = {
   title: "Travel Photography | Awaken Visuals",
   description:
-    "Travel photography portfolio featuring landscapes, street, architecture, wildlife, culture, and aerial photography.",
+    "Adventure and travel photography by Nick Emmerson — stunning landscapes, creative edits, and visual storytelling from around the world.",
 };
 
 export default function TravelPage() {

@@ -40,7 +40,7 @@ export function BlogPreview() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="bg-[#F7F5F0] py-24 md:py-32">
+    <section ref={ref} className="bg-[#FFFFFF] py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -49,10 +49,10 @@ export function BlogPreview() {
           transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
           className="mb-16"
         >
-          <h2 className="text-3xl font-light tracking-[0.1em] text-[#1A1A1A] md:text-4xl">
-            Journal
+          <h2 className="text-3xl font-light tracking-[0.1em] text-[#000000] md:text-4xl">
+            AV Club
           </h2>
-          <div className="mt-4 h-px w-12 bg-[#C8A84E]" />
+          <div className="mt-4 h-px w-12 bg-[#F5A300]" />
         </motion.div>
 
         {/* Post Cards */}
@@ -82,13 +82,13 @@ export function BlogPreview() {
                   />
                 </div>
                 <div className="p-6">
-                  <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#1A1A1A]/40">
+                  <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#000000]/40">
                     {post.date}
                   </span>
-                  <h3 className="mt-3 text-base font-medium leading-snug tracking-wide text-[#1A1A1A] transition-colors duration-300 group-hover:text-[#C8A84E]">
+                  <h3 className="mt-3 text-base font-medium leading-snug tracking-wide text-[#000000] transition-colors duration-300 group-hover:text-[#F5A300]">
                     {post.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[#1A1A1A]/50">
+                  <p className="mt-2 text-sm leading-relaxed text-[#000000]/50">
                     {post.excerpt}
                   </p>
                 </div>
@@ -106,7 +106,7 @@ export function BlogPreview() {
         >
           <Link
             href="/blog"
-            className="inline-block border-b border-[#1A1A1A]/20 pb-1 text-xs font-medium uppercase tracking-[0.2em] text-[#1A1A1A] transition-colors duration-300 hover:border-[#C8A84E] hover:text-[#C8A84E]"
+            className="inline-block border-b border-[#000000]/20 pb-1 text-xs font-medium uppercase tracking-[0.2em] text-[#000000] transition-colors duration-300 hover:border-[#F5A300] hover:text-[#F5A300]"
           >
             View All Posts
           </Link>

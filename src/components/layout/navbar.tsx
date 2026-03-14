@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { Menu, X, Instagram } from "lucide-react";
+import { Menu, X, Instagram, Youtube, MessageCircle } from "lucide-react";
 
 const navLinks = [
   { href: "/portfolio/sport", label: "Action" },
@@ -23,6 +23,8 @@ const socialLinks = [
     ),
     label: "TikTok",
   },
+  { href: "https://youtube.com/@awakenvisuals", icon: Youtube, label: "YouTube" },
+  { href: "https://wa.me/447734803759", icon: MessageCircle, label: "WhatsApp" },
 ];
 
 export function Navbar() {
@@ -71,9 +73,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-[13px] font-medium uppercase tracking-[0.15em] transition-colors hover:text-[#C8A84E] ${
-                  isScrolled ? "text-[#1A1A1A]" : "text-white"
-                }`}
+                className="text-[13px] font-medium uppercase tracking-[0.15em] text-[#F5A300] transition-colors hover:text-[#F5A300]/70"
               >
                 {link.label}
               </Link>
@@ -87,9 +87,7 @@ export function Navbar() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`transition-colors hover:text-[#C8A84E] ${
-                    isScrolled ? "text-[#1A1A1A]/60" : "text-white/60"
-                  }`}
+                  className="text-[#F5A300]/80 transition-colors hover:text-[#F5A300]"
                   aria-label={social.label}
                 >
                   <social.icon className="h-4 w-4" />
@@ -102,7 +100,7 @@ export function Navbar() {
           <button
             onClick={() => setIsMobileOpen(true)}
             className={`md:hidden transition-colors duration-300 ${
-              isScrolled ? "text-[#1A1A1A]" : "text-white"
+              isScrolled ? "text-[#000000]" : "text-white"
             }`}
             aria-label="Open menu"
           >
@@ -136,7 +134,7 @@ export function Navbar() {
               </Link>
               <button
                 onClick={() => setIsMobileOpen(false)}
-                className="text-[#1A1A1A]"
+                className="text-[#000000]"
                 aria-label="Close menu"
               >
                 <X className="h-6 w-6" />
@@ -156,7 +154,7 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     onClick={() => setIsMobileOpen(false)}
-                    className="text-3xl font-light uppercase tracking-[0.2em] text-[#1A1A1A] transition-colors hover:text-[#C8A84E]"
+                    className="text-3xl font-light uppercase tracking-[0.2em] text-[#F5A300] transition-colors hover:text-[#F5A300]/70"
                   >
                     {link.label}
                   </Link>
@@ -172,7 +170,7 @@ export function Navbar() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#1A1A1A]/50 transition-colors hover:text-[#C8A84E]"
+                  className="text-[#F5A300]/80 transition-colors hover:text-[#F5A300]"
                   aria-label={social.label}
                 >
                   <social.icon className="h-5 w-5" />

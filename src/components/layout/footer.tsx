@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Instagram, MessageCircle } from "lucide-react";
+import { Instagram, MessageCircle, Youtube, BookOpen } from "lucide-react";
 
 function TikTokIcon({ className }: { className?: string }) {
   return (
@@ -12,12 +12,15 @@ function TikTokIcon({ className }: { className?: string }) {
 const socialLinks = [
   { href: "https://instagram.com/awakenvisuals", icon: Instagram, label: "Instagram" },
   { href: "https://tiktok.com/@awakenvisuals", icon: TikTokIcon, label: "TikTok" },
-  { href: "https://wa.me/+447858371619", icon: MessageCircle, label: "WhatsApp" },
+  { href: "https://youtube.com/@awakenvisuals", icon: Youtube, label: "YouTube" },
+  { href: "https://wa.me/447734803759", icon: MessageCircle, label: "WhatsApp" },
+  { href: "https://awakenvisuals.substack.com", icon: BookOpen, label: "Substack" },
 ];
 
 const footerLinks = [
   { href: "/portfolio/sport", label: "Action" },
   { href: "/portfolio/travel", label: "Adventure" },
+  { href: "/blog", label: "AV Club" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -48,7 +51,7 @@ export function Footer() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-[13px] uppercase tracking-[0.15em] text-white/60 transition-colors hover:text-[#C8A84E]"
+                className="text-[13px] uppercase tracking-[0.15em] text-white/60 transition-colors hover:text-[#F5A300]"
               >
                 {link.label}
               </Link>
@@ -63,7 +66,7 @@ export function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/50 transition-colors hover:text-[#C8A84E]"
+                className="text-white/50 transition-colors hover:text-[#F5A300]"
                 aria-label={social.label}
               >
                 <social.icon className="h-5 w-5" />

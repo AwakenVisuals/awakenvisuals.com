@@ -9,7 +9,7 @@ export function PortfolioLanding() {
   const isHeadingInView = useInView(headingRef, { once: true });
 
   return (
-    <main className="min-h-screen bg-[#F7F5F0]">
+    <main className="min-h-screen bg-[#FFFFFF]">
       {/* Hero heading */}
       <section className="flex flex-col items-center justify-center px-6 pt-32 pb-16 md:pt-40 md:pb-20">
         <motion.div
@@ -19,13 +19,13 @@ export function PortfolioLanding() {
           transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
           className="text-center"
         >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-light uppercase tracking-[0.15em] text-[#1A1A1A]">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-light uppercase tracking-[0.15em] text-[#000000]">
             Portfolio
           </h1>
-          <p className="mt-5 max-w-xl mx-auto text-base md:text-lg text-[#1A1A1A]/50 tracking-wide">
+          <p className="mt-5 max-w-xl mx-auto text-base md:text-lg text-[#000000]/50 tracking-wide">
             Premium visual storytelling across sport and travel
           </p>
-          <div className="mt-8 h-px w-16 mx-auto bg-[#C8A84E]" />
+          <div className="mt-8 h-px w-16 mx-auto bg-[#F5A300]" />
         </motion.div>
       </section>
 

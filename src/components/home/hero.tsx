@@ -3,7 +3,6 @@
 import { motion } from "motion/react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
 import React from "react";
 
 const InfiniteGallery = dynamic(
@@ -46,7 +45,7 @@ class GalleryErrorBoundary extends React.Component<
 
 export function Hero() {
   return (
-    <section className="relative flex h-screen flex-col items-center justify-center overflow-hidden bg-[#1A1A1A]">
+    <section className="relative flex h-screen flex-col items-center justify-center overflow-hidden bg-[#000000]">
       {/* 3D Gallery Background */}
       <div className="absolute inset-0">
         <GalleryErrorBoundary>
@@ -58,7 +57,7 @@ export function Hero() {
           />
         </GalleryErrorBoundary>
         {/* Overlay for text readability */}
-        <div className="pointer-events-none absolute inset-0 bg-[#1A1A1A]/40" />
+        <div className="pointer-events-none absolute inset-0 bg-[#000000]/40" />
       </div>
 
       {/* Hero Content */}
@@ -68,21 +67,12 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
         >
-          <h1 className="text-5xl font-light tracking-[0.2em] text-white sm:text-6xl md:text-7xl lg:text-8xl">
-            Awaken Visuals
+          <h1 className="text-4xl font-light italic leading-tight tracking-wide text-white sm:text-5xl md:text-6xl lg:text-7xl">
+            Bringing a human touch
+            <br />
+            to your stories
           </h1>
         </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7, ease: [0.25, 0.4, 0.25, 1] }}
-          className="mt-6 max-w-xl text-sm font-light italic leading-relaxed tracking-wide text-white/60 sm:text-base"
-        >
-          Whether its Monaco or Manchester United, Oslo or Osaka.
-          <br className="hidden sm:block" />
-          {" "}We capture the stories you want to tell.
-        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -92,13 +82,13 @@ export function Hero() {
         >
           <Link
             href="/portfolio/sport"
-            className="border border-white/30 px-10 py-3 text-xs font-medium uppercase tracking-[0.2em] text-white transition-all duration-300 hover:border-[#C8A84E] hover:text-[#C8A84E]"
+            className="border border-white/30 px-10 py-3 text-xs font-medium uppercase tracking-[0.2em] text-white transition-all duration-300 hover:border-[#F5A300] hover:text-[#F5A300]"
           >
             Action
           </Link>
           <Link
             href="/portfolio/travel"
-            className="border border-white/30 px-10 py-3 text-xs font-medium uppercase tracking-[0.2em] text-white transition-all duration-300 hover:border-[#C8A84E] hover:text-[#C8A84E]"
+            className="border border-white/30 px-10 py-3 text-xs font-medium uppercase tracking-[0.2em] text-white transition-all duration-300 hover:border-[#F5A300] hover:text-[#F5A300]"
           >
             Adventure
           </Link>
@@ -110,15 +100,17 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8 }}
-        className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2"
+        className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 flex flex-col items-center gap-3"
       >
+        <span className="text-[11px] font-light uppercase tracking-[0.3em] text-white/40">
+          Scroll
+        </span>
         <motion.div
-          animate={{ y: [0, 6, 0] }}
+          animate={{ height: ["0%", "100%", "0%"] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-2"
-        >
-          <ChevronDown className="h-4 w-4 text-white/40" />
-        </motion.div>
+          className="w-px bg-[#F5A300]"
+          style={{ height: 40 }}
+        />
       </motion.div>
     </section>
   );

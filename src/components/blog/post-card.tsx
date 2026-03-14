@@ -23,7 +23,7 @@ export function PostCard({ post }: PostCardProps) {
       className="group"
     >
       <Link href={`/blog/${post.slug}`} className="block">
-        <div className="overflow-hidden rounded-xl border border-[#1A1A1A]/5 bg-white transition-colors duration-300 hover:border-[#C8A84E]/30">
+        <div className="overflow-hidden rounded-xl border border-[#000000]/5 bg-white transition-colors duration-300 hover:border-[#F5A300]/30">
           {/* Cover Image */}
           <div className="relative aspect-[16/10] overflow-hidden">
             <Image
@@ -40,15 +40,15 @@ export function PostCard({ post }: PostCardProps) {
 
           {/* Content */}
           <div className="p-5 md:p-6">
-            <time className="text-xs font-medium uppercase tracking-wider text-[#C8A84E]">
+            <time className="text-xs font-medium uppercase tracking-wider text-[#F5A300]">
               {formattedDate}
             </time>
 
-            <h3 className="mt-2 text-lg font-semibold leading-snug text-[#1A1A1A] transition-colors duration-300 group-hover:text-[#043565] md:text-xl">
+            <h3 className="mt-2 text-lg font-semibold leading-snug text-[#000000] transition-colors duration-300 group-hover:text-[#043565] md:text-xl">
               {post.title}
             </h3>
 
-            <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-[#1A1A1A]/50">
+            <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-[#000000]/50">
               {post.excerpt}
             </p>
 
