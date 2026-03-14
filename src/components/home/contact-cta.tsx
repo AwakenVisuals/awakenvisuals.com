@@ -17,7 +17,7 @@ export function ContactCTA() {
           transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
         >
           <h2 className="text-3xl font-light tracking-[0.1em] text-white md:text-4xl lg:text-5xl">
-            Let&apos;s Create Something Together
+            Let&apos;s create something together
           </h2>
           <p className="mx-auto mt-6 max-w-lg text-base leading-relaxed text-white/50">
             Whether it&apos;s the raw energy of the game or the quiet magic of a new horizon, Awaken Visuals is here to capture the pulse of it. Got a story to tell, a sport to cover, or a journey to document?
