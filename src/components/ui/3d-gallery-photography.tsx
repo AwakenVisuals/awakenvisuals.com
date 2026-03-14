@@ -418,7 +418,7 @@ export function InfiniteGallery({
         camera={{ position: [0, 0, 0], fov: 55 }}
         gl={{ antialias: true, alpha: true }}
         onCreated={({ gl }) => {
-          gl.setClearColor(new THREE.Color("#000000"), 1);
+          gl.setClearColor(new THREE.Color("#043565"), 1);
         }}
       >
         <Suspense fallback={null}>

@@ -45,19 +45,19 @@ class GalleryErrorBoundary extends React.Component<
 
 export function Hero() {
   return (
-    <section className="relative flex h-screen flex-col items-center justify-center overflow-hidden bg-[#000000]">
+    <section className="relative flex h-screen flex-col items-center justify-center overflow-hidden bg-[#043565]">
       {/* 3D Gallery Background */}
       <div className="absolute inset-0">
         <GalleryErrorBoundary>
           <InfiniteGallery
             images={galleryImages}
             speed={0.6}
-            visibleCount={18}
+            visibleCount={28}
             className="h-full w-full"
           />
         </GalleryErrorBoundary>
         {/* Overlay for text readability */}
-        <div className="pointer-events-none absolute inset-0 bg-[#000000]/40" />
+        <div className="pointer-events-none absolute inset-0 bg-[#043565]/50" />
       </div>
 
       {/* Hero Content */}
