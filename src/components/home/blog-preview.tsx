@@ -4,36 +4,18 @@ import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
+import { PLACEHOLDER_POSTS } from "@/lib/posts";
 
-const placeholderPosts = [
-  {
-    title: "Behind the Lens: Champions League Final",
-    excerpt:
-      "An intimate look at capturing the biggest moments in European football from the sidelines.",
-    image:
-      "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&q=80",
-    date: "March 2026",
-    slug: "champions-league-final",
-  },
-  {
-    title: "Iceland: Fire and Ice",
-    excerpt:
-      "Exploring the dramatic landscapes of Iceland through photography, from glaciers to volcanic fields.",
-    image:
-      "https://images.unsplash.com/photo-1504829857797-ddff29c27927?w=600&q=80",
-    date: "February 2026",
-    slug: "iceland-fire-and-ice",
-  },
-  {
-    title: "The Art of Motion: Capturing Speed",
-    excerpt:
-      "Technical insights into photographing fast-moving subjects in motorsport and athletics.",
-    image:
-      "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=600&q=80",
-    date: "January 2026",
-    slug: "art-of-motion",
-  },
-];
+const posts = PLACEHOLDER_POSTS.slice(0, 3).map((post) => ({
+  title: post.title,
+  excerpt: post.excerpt,
+  image: post.coverImage ?? "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+  date: new Date(post.publishedAt).toLocaleDateString("en-GB", {
+    month: "long",
+    year: "numeric",
+  }),
+  slug: post.slug,
+}));
 
 export function BlogPreview() {
   const ref = useRef(null);
@@ -57,7 +39,7 @@ export function BlogPreview() {
 
         {/* Post Cards */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {placeholderPosts.map((post, index) => (
+          {posts.map((post, index) => (
             <motion.article
               key={post.slug}
               initial={{ opacity: 0, y: 30 }}
