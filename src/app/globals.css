@@ -132,3 +132,21 @@ h1, h2, h3, h4, h5, h6 {
 html {
   scroll-behavior: smooth;
 }
+
+/* ================================
+ * MEDIA PROTECTION
+ * Prevents casual saving/downloading of images and videos.
+ * ================================ */
+
+/* Disable image dragging */
+img, video, canvas {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Disable text selection on gallery items (but allow on text content) */
+.gallery-item, .break-inside-avoid {
+  user-select: none;
+  -webkit-touch-callout: none;
+}

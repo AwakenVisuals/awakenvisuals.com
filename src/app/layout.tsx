@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { MediaProtection } from "@/components/ui/media-protection";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -84,6 +85,7 @@ export default function RootLayout({
             }),
           }}
         />
+        <MediaProtection />
         <Navbar />
         {children}
         <Footer />
